@@ -10,6 +10,11 @@ Simply run
 
     sh -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
 
+If you want to avoid using sudo, create a folder, add it to your PATH
+and then issue
+
+    JULIA_INSTALL=yourfolder sh -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+
 ## LICENSE
 
 This script is licensed under the GNU GPLv3 (see

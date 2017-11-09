@@ -75,11 +75,15 @@ function download_and_install() {
   wget -c $url -O julia-$version.tar.gz
   mkdir -p julia-$version
   tar zxf julia-$version.tar.gz -C julia-$version --strip-components 1
-  sudo rm -f $JULIA_INSTALL/julia{,-$major,-$version}
+
+  if [ ! -w $JULIA_INSTALL ]; then
+    SUDO=sudo
+  fi
+  $SUDO rm -f $JULIA_INSTALL/julia{,-$major,-$version}
   julia=$PWD/julia-$version/bin/julia
-  sudo ln -s $julia $JULIA_INSTALL/julia
-  sudo ln -s $julia $JULIA_INSTALL/julia-$major
-  sudo ln -s $julia $JULIA_INSTALL/julia-$version
+  $SUDO ln -s $julia $JULIA_INSTALL/julia
+  $SUDO ln -s $julia $JULIA_INSTALL/julia-$major
+  $SUDO ln -s $julia $JULIA_INSTALL/julia-$version
 }
 
 # --------------------------------------------------------
