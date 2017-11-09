@@ -29,7 +29,7 @@ function header() {
 function badfolder() {
   echo "The folder '$JULIA_INSTALL' is not on your PATH, you can"
   echo "- 1) Add it to your path; or"
-  echo "- 2) Run 'JULIA_INSTALL=otherfolder ./jif.sh'"
+  echo "- 2) Run 'JULIA_INSTALL=otherfolder ./jill.sh'"
 }
 
 function hi() {
