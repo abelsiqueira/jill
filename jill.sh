@@ -36,7 +36,7 @@ function hi() {
   header
   if [[ ! ":$PATH:" == *":$JULIA_INSTALL:"* ]]; then
     badfolder
-    [[ "$0" == "$BASH_SOURCE" ]] && exit 1 || return 1
+    exit 1
   fi
   echo "This script will:"
   echo ""
@@ -61,7 +61,7 @@ function confirm() {
   echo
   if [[ ! $REPLY =~ ^[Yy] ]]; then
     echo "Aborted"
-    [[ "$0" == "$BASH_SOURCE" ]] && exit 1 || return 1
+    exit 1
   fi
 }
 
