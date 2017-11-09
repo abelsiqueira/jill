@@ -8,7 +8,7 @@ unpacking, and linking their software, this script does it for you.
 
 Simply run
 
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+    sh -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
 
 ## LICENSE
 
