@@ -1,0 +1,7 @@
+language: bash
+
+sudo: required
+
+script:
+  - echo "y" | bash jill.sh
+  - julia -v
