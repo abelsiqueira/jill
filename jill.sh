@@ -1,4 +1,4 @@
-#! /bin/sh
+#/usr/bin/env sh
 #
 # jill.sh
 # Copyright (C) 2017 Abel Soares Siqueira <abel.s.siqueira@gmail.com>
@@ -69,7 +69,8 @@ function download_and_install() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
   wget https://julialang.org/downloads/ -O page.html
-  url=$(grep "https.*linux/x64.*gz" page.html -m 1 -o)
+  arch="$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')" 
+  url=$(grep "https.*linux/.*${arch}.*gz" page.html -m 1 -o)
   [[ $url =~ julia-(.*)-linux ]] && version=${BASH_REMATCH[1]}
   major=${version:0:3}
   wget -c $url -O julia-$version.tar.gz
