@@ -68,12 +68,12 @@ function confirm() {
 function download_and_install() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
-  wget --no-check-certificate https://julialang.org/downloads/ -O page.html
+  wget https://julialang.org/downloads/ -O page.html
   arch="$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')"
   url=$(grep "https.*linux/${arch}.*gz" page.html -m 1 -o)
   [[ $url =~ julia-(.*)-linux ]] && version=${BASH_REMATCH[1]}
   major=${version:0:3}
-  wget --no-check-certificate -c $url -O julia-$version.tar.gz
+  wget -c $url -O julia-$version.tar.gz
   mkdir -p julia-$version
   tar zxf julia-$version.tar.gz -C julia-$version --strip-components 1
 
