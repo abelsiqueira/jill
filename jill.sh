@@ -69,7 +69,12 @@ function download_and_install() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
   wget https://julialang.org/downloads/ -O page.html
-  arch="$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')"
+  arch="$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')" 
+  echo "$(lscpu)" 
+  echo "$(lscpu | grep Architecture)" 
+  echo "$(lscpu | grep Architecture | cut -d':' -f2)" 
+  echo "$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')" 
+  echo "$arch"
   url=$(grep "https.*linux/${arch}.*gz" page.html -m 1 -o)
   [[ $url =~ julia-(.*)-linux ]] && version=${BASH_REMATCH[1]}
   major=${version:0:3}
