@@ -70,7 +70,15 @@ function download_and_install() {
   cd $JULIA_DOWNLOAD
   wget https://julialang.org/downloads/ -O page.html
   arch="$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')" 
-  url=$(grep "https.*linux/.*${arch}.*gz" page.html -m 1 -o)
+  echo $JULIA_VERSION
+
+  # Download specific version if requested
+  if [ -n "${JULIA_VERSION+set}" ]; then
+    url=$(grep "https.*linux/.*${JULIA_VERSION}.*${arch}.*gz" page.html -m 1 -o)
+  else
+    url=$(grep "https.*linux/.*${arch}.*gz" page.html -m 1 -o)
+  fi
+
   [[ $url =~ julia-(.*)-linux ]] && version=${BASH_REMATCH[1]}
   major=${version:0:3}
   wget -c $url -O julia-$version.tar.gz
