@@ -69,8 +69,7 @@ function download_and_install() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
   wget https://julialang.org/downloads/ -O page.html
-  arch="$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')" 
-  echo $JULIA_VERSION
+  arch="$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')"
 
   # Download specific version if requested
   if [ -n "${JULIA_VERSION+set}" ]; then
@@ -80,6 +79,10 @@ function download_and_install() {
   fi
 
   [[ $url =~ julia-(.*)-linux ]] && version=${BASH_REMATCH[1]}
+  if [ -z "$version" ]; then
+    echo "No version $JULIA_VERSION found, it may not be supported anymore"
+    exit 1
+  fi
   major=${version:0:3}
   wget -c $url -O julia-$version.tar.gz
   mkdir -p julia-$version
