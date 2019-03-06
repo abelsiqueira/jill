@@ -19,6 +19,13 @@ and then issue
 
     JULIA_INSTALL=yourfolder bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
 
+To download a specific supported version, use
+
+    JULIA_VERSION=x.y.z bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+
+Where `x.y.z` is the desired version. Notice that the script only searches the main page
+for supported versions. That means that older unmaintaned versions can't be found.
+
 ## LICENSE
 
 This script is licensed under the GNU GPLv3 (see
