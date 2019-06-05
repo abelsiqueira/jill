@@ -69,7 +69,7 @@ function download_and_install() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
   wget https://julialang.org/downloads/ -O page.html
-  arch="$(lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')"
+  arch="$(LC_ALL=C lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')"
 
   # Download specific version if requested
   if [ -n "${JULIA_VERSION+set}" ]; then
