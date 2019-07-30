@@ -21,7 +21,7 @@ JULIA_DOWNLOAD=${JULIA_DOWNLOAD:-"$HOME/packages/julias"}
 JULIA_INSTALL=${JULIA_INSTALL:-"/usr/local/bin"}
 
 function header() {
-  echo "Jill - Julia Installer 4 Linux - Light"
+  echo "Jill - Julia Installer 4 Linux (and MacOS) - Light"
   echo "Copyright (C) 2017 Abel Soares Siqueira <abel.s.siqueira@gmail.com>"
   echo "Distributed under terms of the GPLv3 license."
 }
@@ -65,7 +65,7 @@ function confirm() {
   fi
 }
 
-function download_and_install() {
+function install_julia_linux() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
   wget https://julialang.org/downloads/ -O page.html
@@ -98,8 +98,57 @@ function download_and_install() {
   $SUDO ln -s $julia $JULIA_INSTALL/julia-$version
 }
 
+function install_julia_mac() {
+  mkdir -p $JULIA_DOWNLOAD
+  cd $JULIA_DOWNLOAD
+  wget https://julialang.org/downloads/ -O page.html
+  arch="mac64"
+
+  # Download specific version if requested
+  if [ -n "${JULIA_VERSION+set}" ]; then
+    url=$(grep "https.*mac/.*${JULIA_VERSION}.*${arch}.*dmg" page.html -m 1 -o)
+  else
+    url=$(grep "https.*mac/.*${arch}.*dmg" page.html -m 1 -o)
+  fi
+
+  [[ $url =~ julia-(.*)-mac ]] && version=${BASH_REMATCH[1]}
+  if [ -z "$version" ]; then
+    echo "No version $JULIA_VERSION found, it may not be supported anymore"
+    exit 1
+  fi
+  major=${version:0:3}
+  wget -c $url -O julia-$version.dmg
+
+  ATTACH_FOLDER=julia-$version
+  hdiutil attach julia-$version.dmg -quiet
+
+  INSTALL_PATH=/Applications/julia-$major.app
+  EXEC_PATH=$INSTALL_PATH/Contents/Resources/julia/bin/julia
+  rm -rf $INSTALL_PATH
+  cp -a /Volumes/$ATTACH_FOLDER/Julia-$major.app /Applications/
+
+  # create symlink
+  ln -sf $EXEC_PATH $JULIA_INSTALL/julia
+  ln -sf $EXEC_PATH $JULIA_INSTALL/julia-$major
+  ln -sf $EXEC_PATH $JULIA_INSTALL/julia-$version
+
+  # post-installation
+  umount /Volumes/$ATTACH_FOLDER
+}
+
 # --------------------------------------------------------
 
+# Main
 hi
 confirm
-download_and_install
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*) install_julia_linux ;;
+    Darwin*) install_julia_mac ;;
+    # CYGWIN*)    machine=Cygwin;;
+    # MINGW*)     machine=MinGw;;
+    *)
+        echo "Unsupported platform $(unameOut)" >&2
+        exit 1
+        ;;
+esac
