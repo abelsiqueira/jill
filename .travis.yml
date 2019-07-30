@@ -1,5 +1,9 @@
 language: bash
 
+os:
+  - linux
+  - osx
+
 sudo: required
 
 script:
