@@ -35,13 +35,25 @@ function badfolder() {
   echo "The folder '$JULIA_INSTALL' is not on your PATH, you can"
   echo "- 1) Add it to your path; or"
   echo "- 2) Run 'JULIA_INSTALL=otherfolder ./jill.sh'"
+
+  read -p "Do you want to add '$JULIA_INSTALL' into your PATH? (Y/N) " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy] ]]; then
+    echo "Aborted"
+    exit 1
+  else
+    mkdir -p $JULIA_INSTALL
+    echo 'export PATH="'"$JULIA_INSTALL"':$PATH"' | tee -a ~/.bashrc
+    echo ""
+    echo "run 'source ~/.bashrc' or restart your bash to reload the PATH"
+    echo ""
+  fi
 }
 
 function hi() {
   header
   if [[ ! ":$PATH:" == *":$JULIA_INSTALL:"* ]]; then
     badfolder
-    exit 1
   fi
   echo "This script will:"
   echo ""
@@ -57,7 +69,7 @@ function hi() {
     echo "Download folder will be created if required"
   fi
   if [ ! -w $JULIA_INSTALL ]; then
-    echo "You don't have write permission to $JULIA_INSTALL"
+    echo "You don't have write permission to $JULIA_INSTALL or the dir doesn't exist"
     exit 1
   fi
 }
