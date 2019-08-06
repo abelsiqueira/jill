@@ -17,6 +17,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# For Linux, this script installs Julia into $JULIA_DOWNLOAD and make a
+# link to $JULIA_INSTALL
+# For MacOS, this script installs Julia into /Applications and make a
+# link to $JULIA_INSTALL
 if [[ "$(whoami)" == "root" ]]; then
   JULIA_DOWNLOAD=${JULIA_DOWNLOAD:-"/opt/julias"}
   JULIA_INSTALL=${JULIA_INSTALL:-"/usr/local/bin"}
@@ -26,7 +31,7 @@ else
 fi
 
 function header() {
-  echo "Jill - Julia Installer 4 Linux (and MacOS) - Light"
+  echo "JILL - Julia Installer 4 Linux (and MacOS) - Light"
   echo "Copyright (C) 2017 Abel Soares Siqueira <abel.s.siqueira@gmail.com>"
   echo "Distributed under terms of the GPLv3 license."
 }
