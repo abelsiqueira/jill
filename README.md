@@ -15,10 +15,17 @@ Simply run
 
     bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
 
-If you want to avoid using sudo, create a folder, add it to your PATH
-and then issue
+installs Julia into `$HOME/.local/bin`.
 
-    JULIA_INSTALL=yourfolder bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+If you want to install Julia system-wide, you can add an `sudo` prefix
+
+    sudo bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+
+If you want to install to other places, you can specify the `JULIA_DOWNLOAD` and `JULIA_INSTALL` folder
+
+    JULIA_DOWNLOAD=downloadfolder JULIA_INSTALL=linkfolder bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+
+The script will then download Julia in `JULIA_DOWNLOAD` and make a link to `JULIA_INSTALL`.
 
 To download a specific supported version, use
 

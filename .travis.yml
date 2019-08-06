@@ -7,5 +7,5 @@ os:
 sudo: required
 
 script:
-  - echo "y" | bash jill.sh
+  - echo "yy" | bash jill.sh
   - julia -v

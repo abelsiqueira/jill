@@ -17,12 +17,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 # For Linux, this script installs Julia into $JULIA_DOWNLOAD and make a
 # link to $JULIA_INSTALL
 # For MacOS, this script installs Julia into /Applications and make a
 # link to $JULIA_INSTALL
-JULIA_DOWNLOAD=${JULIA_DOWNLOAD:-"$HOME/packages/julias"}
-JULIA_INSTALL=${JULIA_INSTALL:-"/usr/local/bin"}
+if [[ "$(whoami)" == "root" ]]; then
+  JULIA_DOWNLOAD=${JULIA_DOWNLOAD:-"/opt/julias"}
+  JULIA_INSTALL=${JULIA_INSTALL:-"/usr/local/bin"}
+else
+  JULIA_DOWNLOAD=${JULIA_DOWNLOAD:-"$HOME/packages/julias"}
+  JULIA_INSTALL=${JULIA_INSTALL:-"$HOME/.local/bin"}
+fi
 
 function header() {
   echo "JILL - Julia Installer 4 Linux (and MacOS) - Light"
@@ -34,14 +40,26 @@ function badfolder() {
   echo "The folder '$JULIA_INSTALL' is not on your PATH, you can"
   echo "- 1) Add it to your path; or"
   echo "- 2) Run 'JULIA_INSTALL=otherfolder ./jill.sh'"
+
+  read -p "Do you want to add '$JULIA_INSTALL' into your PATH? (Y/N) " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy] ]]; then
+    echo "Aborted"
+    exit 1
+  else
+    echo 'export PATH="'"$JULIA_INSTALL"':$PATH"' | tee -a ~/.bashrc
+    echo ""
+    echo "run 'source ~/.bashrc' or restart your bash to reload the PATH"
+    echo ""
+  fi
 }
 
 function hi() {
   header
   if [[ ! ":$PATH:" == *":$JULIA_INSTALL:"* ]]; then
     badfolder
-    exit 1
   fi
+  mkdir -p $JULIA_INSTALL # won't create if it's aborted earlier
   echo "This script will:"
   echo ""
   # TODO: Expand to install older Julia?
@@ -56,7 +74,8 @@ function hi() {
     echo "Download folder will be created if required"
   fi
   if [ ! -w $JULIA_INSTALL ]; then
-    echo "You'll be asked for your sudo password to install on $JULIA_INSTALL"
+    echo "You don't have write permission to $JULIA_INSTALL."
+    exit 1
   fi
 }
 
@@ -92,14 +111,11 @@ function install_julia_linux() {
   mkdir -p julia-$version
   tar zxf julia-$version.tar.gz -C julia-$version --strip-components 1
 
-  if [ ! -w $JULIA_INSTALL ]; then
-    SUDO=sudo
-  fi
-  $SUDO rm -f $JULIA_INSTALL/julia{,-$major,-$version}
+  rm -f $JULIA_INSTALL/julia{,-$major,-$version}
   julia=$PWD/julia-$version/bin/julia
-  $SUDO ln -s $julia $JULIA_INSTALL/julia
-  $SUDO ln -s $julia $JULIA_INSTALL/julia-$major
-  $SUDO ln -s $julia $JULIA_INSTALL/julia-$version
+  ln -s $julia $JULIA_INSTALL/julia
+  ln -s $julia $JULIA_INSTALL/julia-$major
+  ln -s $julia $JULIA_INSTALL/julia-$version
 }
 
 function install_julia_mac() {
