@@ -42,7 +42,6 @@ function badfolder() {
     echo "Aborted"
     exit 1
   else
-    mkdir -p $JULIA_INSTALL
     echo 'export PATH="'"$JULIA_INSTALL"':$PATH"' | tee -a ~/.bashrc
     echo ""
     echo "run 'source ~/.bashrc' or restart your bash to reload the PATH"
@@ -55,6 +54,7 @@ function hi() {
   if [[ ! ":$PATH:" == *":$JULIA_INSTALL:"* ]]; then
     badfolder
   fi
+  mkdir -p $JULIA_INSTALL # won't create if it's aborted earlier
   echo "This script will:"
   echo ""
   # TODO: Expand to install older Julia?
@@ -69,7 +69,7 @@ function hi() {
     echo "Download folder will be created if required"
   fi
   if [ ! -w $JULIA_INSTALL ]; then
-    echo "You don't have write permission to $JULIA_INSTALL or the dir doesn't exist"
+    echo "You don't have write permission to $JULIA_INSTALL."
     exit 1
   fi
 }
