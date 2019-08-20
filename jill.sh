@@ -29,6 +29,7 @@ else
   JULIA_DOWNLOAD=${JULIA_DOWNLOAD:-"$HOME/packages/julias"}
   JULIA_INSTALL=${JULIA_INSTALL:-"$HOME/.local/bin"}
 fi
+WGET="wget --retry-connrefused -t 3"
 
 function header() {
   echo "JILL - Julia Installer 4 Linux (and MacOS) - Light"
@@ -88,29 +89,47 @@ function confirm() {
   fi
 }
 
+function get_latest_version() {
+  $WGET https://julialang.org/downloads/ -O page.html
+  grep "Current stable release:" page.html | grep "[0-9]*\.[0-9]*\.[0-9]*" -o
+}
+
+function get_url_from_platform_arch_version() {
+  platform=$1
+  arch=$2
+  version=$3
+  # TODO: Accept ARM and FreeBSD
+  [[ $arch == *"64" ]] && bit=64 || bit=32
+  [[ $arch == "mac"* ]] && suffix=mac64.dmg || suffix=$platform-$arch.tar.gz
+  minor=$(echo $version | cut -d. -f1-2)
+  url=https://julialang-s3.julialang.org/bin/$platform/x$bit/$minor/julia-$version-$suffix
+  echo $url
+}
+
 function install_julia_linux() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
-  wget https://julialang.org/downloads/ -O page.html
   arch="$(LC_ALL=C lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')"
 
   # Download specific version if requested
   if [ -n "${JULIA_VERSION+set}" ]; then
-    url=$(grep "https.*linux/.*${JULIA_VERSION}.*${arch}.*gz" page.html -m 1 -o)
+    version=$JULIA_VERSION
   else
-    url=$(grep "https.*linux/.*${arch}.*gz" page.html -m 1 -o)
+    version=$(get_latest_version)
+  fi
+  echo "Downloading Julia version $version"
+  if [ ! -f julia-$version.tar.gz ]; then
+    url=$(get_url_from_platform_arch_version linux $arch $version)
+    $WGET -c $url -O julia-$version.tar.gz
+  else
+    echo "already downloaded"
+  fi
+  if [ ! -d julia-$version ]; then
+    mkdir -p julia-$version
+    tar zxf julia-$version.tar.gz -C julia-$version --strip-components 1
   fi
 
-  [[ $url =~ julia-(.*)-linux ]] && version=${BASH_REMATCH[1]}
-  if [ -z "$version" ]; then
-    echo "No version $JULIA_VERSION found, it may not be supported anymore"
-    exit 1
-  fi
   major=${version:0:3}
-  wget -c $url -O julia-$version.tar.gz
-  mkdir -p julia-$version
-  tar zxf julia-$version.tar.gz -C julia-$version --strip-components 1
-
   rm -f $JULIA_INSTALL/julia{,-$major,-$version}
   julia=$PWD/julia-$version/bin/julia
   ln -s $julia $JULIA_INSTALL/julia
@@ -121,23 +140,20 @@ function install_julia_linux() {
 function install_julia_mac() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
-  wget https://julialang.org/downloads/ -O page.html
   arch="mac64"
 
   # Download specific version if requested
   if [ -n "${JULIA_VERSION+set}" ]; then
-    url=$(grep "https.*mac/.*${JULIA_VERSION}.*${arch}.*dmg" page.html -m 1 -o)
+    version=$JULIA_VERSION
   else
-    url=$(grep "https.*mac/.*${arch}.*dmg" page.html -m 1 -o)
+    version=$(get_latest_version)
+  fi
+  if [ ! -f julia-$version.dmg ]; then
+    url=$(get_url_from_platform_arch_version mac $arch $version)
+    $WGET -c $url -O julia-$version.dmg
   fi
 
-  [[ $url =~ julia-(.*)-mac ]] && version=${BASH_REMATCH[1]}
-  if [ -z "$version" ]; then
-    echo "No version $JULIA_VERSION found, it may not be supported anymore"
-    exit 1
-  fi
   major=${version:0:3}
-  wget -c $url -O julia-$version.dmg
 
   hdiutil attach julia-$version.dmg -quiet
 

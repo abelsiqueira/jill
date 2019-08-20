@@ -4,8 +4,17 @@ os:
   - linux
   - osx
 
+env:
+  - VERSION=0.3.12
+  - VERSION=0.4.7
+  - VERSION=0.5.2
+  - VERSION=0.6.4
+  - VERSION=0.7.0
+  - VERSION=1.0.4
+  - VERSION=1.1.1
+  - VERSION=1.2.0
+
 sudo: required
 
 script:
-  - echo "yy" | bash jill.sh
-  - julia -v
+  - bash travis-test.sh
