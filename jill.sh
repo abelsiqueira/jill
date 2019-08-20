@@ -155,12 +155,12 @@ function install_julia_mac() {
 
   major=${version:0:3}
 
-  hdiutil attach julia-$version.dmg -quiet
+  hdiutil attach julia-$version.dmg -quiet -mount required -mountpoint julia-$version
 
   INSTALL_PATH=/Applications/julia-$major.app
   EXEC_PATH=$INSTALL_PATH/Contents/Resources/julia/bin/julia
   rm -rf $INSTALL_PATH
-  cp -a /Volumes/julia-$version/Julia-$major.app /Applications/
+  cp -a julia-$version/Julia-$major.app /Applications/
 
   # create symlink
   ln -sf $EXEC_PATH $JULIA_INSTALL/julia
@@ -168,7 +168,7 @@ function install_julia_mac() {
   ln -sf $EXEC_PATH $JULIA_INSTALL/julia-$version
 
   # post-installation
-  umount /Volumes/julia-$version
+  umount julia-$version
 }
 
 # --------------------------------------------------------
