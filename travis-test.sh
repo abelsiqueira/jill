@@ -25,3 +25,6 @@ julia-$VERSION -v
 
 msg "Testing if the version is correct"
 [[ $(julia-$VERSION -v) == "julia version $VERSION" ]]
+
+msg "Installing latest Julia without interactive prompt"
+bash jill.sh -y
