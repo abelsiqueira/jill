@@ -109,7 +109,7 @@ function get_url_from_platform_arch_version() {
 function install_julia_linux() {
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
-  arch="$(LC_ALL=C lscpu | grep Architecture | cut -d':' -f2 | tr -d '[:space:]')"
+  arch=$(uname -m)
 
   # Download specific version if requested
   if [ -n "${JULIA_VERSION+set}" ]; then
