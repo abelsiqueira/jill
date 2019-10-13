@@ -33,6 +33,11 @@ To download a specific older version, use
 
 Where `x.y.z` is the desired version.
 
+
+If you wish to run the install script without interactive prompts, please clone this repository and run the following:
+
+    bash jill.sh -y
+
 ## LICENSE
 
 This script is licensed under the GNU GPLv3 (see

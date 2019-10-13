@@ -17,6 +17,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Skip confirm if -y is used.
+SKIP_CONFIRM=0
+while getopts ":y" opt; do
+  case $opt in
+    y)
+      SKIP_CONFIRM=1
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1;
+      ;;
+  esac
+done
 
 # For Linux, this script installs Julia into $JULIA_DOWNLOAD and make a
 # link to $JULIA_INSTALL
@@ -41,18 +54,18 @@ function badfolder() {
   echo "The folder '$JULIA_INSTALL' is not on your PATH, you can"
   echo "- 1) Add it to your path; or"
   echo "- 2) Run 'JULIA_INSTALL=otherfolder ./jill.sh'"
-
-  read -p "Do you want to add '$JULIA_INSTALL' into your PATH? (Y/N) " -n 1 -r
-  echo
-  if [[ ! $REPLY =~ ^[Yy] ]]; then
-    echo "Aborted"
-    exit 1
-  else
-    echo 'export PATH="'"$JULIA_INSTALL"':$PATH"' | tee -a ~/.bashrc
-    echo ""
-    echo "run 'source ~/.bashrc' or restart your bash to reload the PATH"
-    echo ""
+  if [[ "$SKIP_CONFIRM" == "0" ]]; then
+    read -p "Do you want to add '$JULIA_INSTALL' into your PATH? (Y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy] ]]; then
+      echo "Aborted"
+      exit 1
+    fi
   fi
+  echo 'export PATH="'"$JULIA_INSTALL"':$PATH"' | tee -a ~/.bashrc
+  echo ""
+  echo "run 'source ~/.bashrc' or restart your bash to reload the PATH"
+  echo ""
 }
 
 function hi() {
@@ -175,7 +188,9 @@ function install_julia_mac() {
 
 # Main
 hi
-confirm
+if [[ "$SKIP_CONFIRM" == "0" ]]; then
+    confirm
+fi
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*) install_julia_linux ;;
