@@ -62,10 +62,10 @@ function badfolder() {
       exit 1
     fi
   fi
-    echo 'export PATH="'"$JULIA_INSTALL"':$PATH"' | tee -a ~/.bashrc
-    echo ""
-    echo "run 'source ~/.bashrc' or restart your bash to reload the PATH"
-    echo ""
+  echo 'export PATH="'"$JULIA_INSTALL"':$PATH"' | tee -a ~/.bashrc
+  echo ""
+  echo "run 'source ~/.bashrc' or restart your bash to reload the PATH"
+  echo ""
 }
 
 function hi() {
