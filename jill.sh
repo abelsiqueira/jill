@@ -1,7 +1,7 @@
 #/usr/bin/env bash
 #
 # jill.sh
-# Copyright (C) 2017 Abel Soares Siqueira <abel.s.siqueira@gmail.com>
+# Copyright (C) 2017-2020 Abel Soares Siqueira <abel.s.siqueira@gmail.com>
 #
 # Distributed under terms of the GPLv3 license.
 # This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,8 @@ while getopts ":y" opt; do
       ;;
   esac
 done
+
+JULIA_LATEST=1.4
 
 # For Linux, this script installs Julia into $JULIA_DOWNLOAD and make a
 # link to $JULIA_INSTALL
@@ -102,11 +104,6 @@ function confirm() {
   fi
 }
 
-function get_latest_version() {
-  $WGET https://julialang.org/downloads/ -O page.html
-  grep "Current stable release:" page.html | grep "[0-9]*\.[0-9]*\.[0-9]*" -o
-}
-
 function get_url_from_platform_arch_version() {
   platform=$1
   arch=$2
@@ -114,7 +111,7 @@ function get_url_from_platform_arch_version() {
   # TODO: Accept ARM and FreeBSD
   [[ $arch == *"64" ]] && bit=64 || bit=32
   [[ $arch == "mac"* ]] && suffix=mac64.dmg || suffix=$platform-$arch.tar.gz
-  minor=$(echo $version | cut -d. -f1-2)
+  minor=$(echo $version | cut -d. -f1-2 | cut -d- -f1)
   url=https://julialang-s3.julialang.org/bin/$platform/x$bit/$minor/julia-$version-$suffix
   echo $url
 }
@@ -128,7 +125,7 @@ function install_julia_linux() {
   if [ -n "${JULIA_VERSION+set}" ]; then
     version=$JULIA_VERSION
   else
-    version=$(get_latest_version)
+    version=$JULIA_LATEST-latest
   fi
   echo "Downloading Julia version $version"
   if [ ! -f julia-$version.tar.gz ]; then
@@ -159,7 +156,7 @@ function install_julia_mac() {
   if [ -n "${JULIA_VERSION+set}" ]; then
     version=$JULIA_VERSION
   else
-    version=$(get_latest_version)
+    version=$JULIA_LATEST-latest
   fi
   if [ ! -f julia-$version.dmg ]; then
     url=$(get_url_from_platform_arch_version mac $arch $version)
