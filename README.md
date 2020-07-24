@@ -1,3 +1,7 @@
+<p>
+  <img width="150" align='right' src="jill.jpg">
+</p>
+
 # JILL - Julia Installer 4 Linux (and MacOS) - Light
 
 [![Build
