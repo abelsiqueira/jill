@@ -152,7 +152,7 @@ function install_julia_linux() {
 
   if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
     old_major=${JULIA_OLD:0:3}
-    cp -r ~/.julia/environments/v${old_major} ~/.julia/environments/v${$major}
+    cp -r ~/.julia/environments/v${old_major} ~/.julia/environments/v${major}
   fi
 
   # create symlink
@@ -188,7 +188,7 @@ function install_julia_mac() {
 
   if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
     old_major=${JULIA_OLD:0:3}
-    cp -r ~/.julia/environments/v${old_major} ~/.julia/environments/v${$major}
+    cp -r ~/.julia/environments/v${old_major} ~/.julia/environments/v${major}
   fi
 
   # create symlink
