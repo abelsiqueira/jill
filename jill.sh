@@ -31,7 +31,7 @@ while getopts ":y" opt; do
   esac
 done
 
-JULIA_LATEST=1.4
+JULIA_LATEST=1.5
 
 # For Linux, this script installs Julia into $JULIA_DOWNLOAD and make a
 # link to $JULIA_INSTALL
