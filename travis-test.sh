@@ -28,3 +28,9 @@ msg "Testing if the version is correct"
 
 msg "Installing latest Julia without interactive prompt"
 bash jill.sh -y
+
+msg "Installing Julia LTS version"
+JULIA_VERSION=1.0.5 bash jill.sh -y
+
+msg "Upgrading to the latest Julia"
+bash jill.sh -y -u 1.0.5

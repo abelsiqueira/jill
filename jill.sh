@@ -19,10 +19,17 @@
 
 # Skip confirm if -y is used.
 SKIP_CONFIRM=0
-while getopts ":y" opt; do
+# Copy over the old environment to the new one if -u is used.
+UPGRADE_CONFIRM=0
+JULIA_OLD=""
+while getopts ":yu:" opt; do
   case $opt in
     y)
       SKIP_CONFIRM=1
+      ;;
+    u)
+      UPGRADE_CONFIRM=1
+      JULIA_OLD=${OPTARG}
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -142,6 +149,13 @@ function install_julia_linux() {
   major=${version:0:3}
   rm -f $JULIA_INSTALL/julia{,-$major,-$version}
   julia=$PWD/julia-$version/bin/julia
+
+  if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
+    old_major=${JULIA_OLD:0:3}
+    cp -r ~/.julia/environments/v${old_major} ~/.julia/environments/v${$major}
+  fi
+
+  # create symlink
   ln -s $julia $JULIA_INSTALL/julia
   ln -s $julia $JULIA_INSTALL/julia-$major
   ln -s $julia $JULIA_INSTALL/julia-$version
@@ -171,6 +185,11 @@ function install_julia_mac() {
   EXEC_PATH=$INSTALL_PATH/Contents/Resources/julia/bin/julia
   rm -rf $INSTALL_PATH
   cp -a julia-$version/Julia-$major.app /Applications/
+
+  if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
+    old_major=${JULIA_OLD:0:3}
+    cp -r ~/.julia/environments/v${old_major} ~/.julia/environments/v${$major}
+  fi
 
   # create symlink
   ln -sf $EXEC_PATH $JULIA_INSTALL/julia
