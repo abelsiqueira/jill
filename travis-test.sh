@@ -31,6 +31,8 @@ bash jill.sh -y
 
 msg "Installing Julia LTS version"
 JULIA_VERSION=1.0.5 bash jill.sh -y
+julia -e 'using Pkg; Pkg.update(); Pkg.add("Example")'
 
 msg "Upgrading to the latest Julia"
 bash jill.sh -y -u 1.0.5
+julia -e 'using Pkg; Pkg.status()'
