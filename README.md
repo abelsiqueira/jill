@@ -42,6 +42,12 @@ If you wish to run the install script without interactive prompts, please clone 
 
     bash jill.sh -y
 
+If you wish to upgrade Julia and copy over the old envinonment to the new one, please clone this repository and run the following:
+
+    bash jill.sh -u x.y.z
+
+Where `x.y.z` is your current version.
+
 ## LICENSE
 
 This script is licensed under the GNU GPLv3 (see
