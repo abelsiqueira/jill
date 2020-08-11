@@ -37,16 +37,21 @@ To download a specific older version, use
 
 Where `x.y.z` is the desired version.
 
+## Alternative to curl and updating previous installations
+
+Instead of downloading the file with curl (for instance, if you had SSL issues as in #32), you can download or clone the repo on it's entirety using `git` or the download button. Then, open a terminal in the downloaded folder and enter
+
+    bash jill.sh
+    
+Other options, as described above, still apply. In addition, if you wish to upgrade Julia and copy over the old environment to the new one, run the following:
+
+    bash jill.sh -u x.y.z
+    
+Where `x.y.z` is your current version.
 
 If you wish to run the install script without interactive prompts, please clone this repository and run the following:
 
     bash jill.sh -y
-
-If you wish to upgrade Julia and copy over the old environment to the new one, please clone this repository and run the following:
-
-    bash jill.sh -u x.y.z
-
-Where `x.y.z` is your current version.
 
 ## LICENSE
 
