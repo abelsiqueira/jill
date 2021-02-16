@@ -1,7 +1,6 @@
 #/usr/bin/env bash
-#
 # jill.sh
-# Copyright (C) 2017-2020 Abel Soares Siqueira <abel.s.siqueira@gmail.com>
+# Copyright (C) 2017-2021 Abel Soares Siqueira <abel.s.siqueira@gmail.com>
 #
 # Distributed under terms of the GPLv3 license.
 # This program is free software: you can redistribute it and/or modify
@@ -55,7 +54,7 @@ WGET="wget --retry-connrefused -t 3"
 
 function header() {
   echo "JILL - Julia Installer 4 Linux (and MacOS) - Light"
-  echo "Copyright (C) 2017 Abel Soares Siqueira <abel.s.siqueira@gmail.com>"
+  echo "Copyright (C) 2017-2021 Abel Soares Siqueira <abel.s.siqueira@gmail.com>"
   echo "Distributed under terms of the GPLv3 license."
 }
 
