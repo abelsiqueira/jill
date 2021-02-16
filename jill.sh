@@ -64,7 +64,7 @@ function badfolder() {
   echo "- 1) Add it to your path; or"
   echo "- 2) Run 'JULIA_INSTALL=otherfolder ./jill.sh'"
   if [[ "$SKIP_CONFIRM" == "0" ]]; then
-    read -p "Do you want to add '$JULIA_INSTALL' into your PATH? (Y/N) " -n 1 -r
+    read -p "Do you want to add '$JULIA_INSTALL' into your PATH? (Aborting otherwise) (Y/N) " -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Yy] ]]; then
       echo "Aborted"
@@ -85,7 +85,6 @@ function hi() {
   mkdir -p $JULIA_INSTALL # won't create if it's aborted earlier
   echo "This script will:"
   echo ""
-  # TODO: Expand to install older Julia?
   echo "  - Download latest stable Julia"
   echo "  - Create a link for julia"
   echo "  - Create a link for julia-VER"
@@ -129,21 +128,35 @@ function install_julia_linux() {
   arch=$(uname -m)
 
   # Download specific version if requested
+  LATEST=0
   if [ -n "${JULIA_VERSION+set}" ]; then
     version=$JULIA_VERSION
   else
+    LATEST=1
     version=$JULIA_LATEST-latest
   fi
   echo "Downloading Julia version $version"
   if [ ! -f julia-$version.tar.gz ]; then
     url=$(get_url_from_platform_arch_version linux $arch $version)
     $WGET -c $url -O julia-$version.tar.gz
+    if [ $? -ne 0 ]; then
+      echo "error downloading julia-$version"
+      rm julia-$version.tar.gz
+      return
+    fi
   else
     echo "already downloaded"
   fi
   if [ ! -d julia-$version ]; then
     mkdir -p julia-$version
     tar zxf julia-$version.tar.gz -C julia-$version --strip-components 1
+  fi
+  if [[ "$LATEST" == "1" ]]; then
+    # Need to change suffix x.y-latest to x.y.z
+    JLVERSION=$(./julia-$version/bin/julia -version | cut -d' ' -f3)
+    mv julia-$version.tar.gz julia-$JLVERSION.tar.gz
+    mv julia-$version julia-$JLVERSION
+    version=$JLVERSION
   fi
 
   major=${version:0:3}
