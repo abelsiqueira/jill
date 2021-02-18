@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
       - name: Test script
-        run: bash -eu ci-test.sh
+        run: |
+          export PATH="/home/runner/.local/bin:$PATH"
+          bash ci-test.sh
