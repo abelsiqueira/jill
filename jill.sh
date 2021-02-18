@@ -21,7 +21,7 @@ SKIP_CONFIRM=0
 # Copy over the old environment to the new one if -u is used.
 UPGRADE_CONFIRM=0
 JULIA_OLD=""
-while getopts ":yu:" opt; do
+while getopts ":ysu:" opt; do
   case $opt in
     y)
       SKIP_CONFIRM=1
@@ -50,7 +50,7 @@ else
   JULIA_DOWNLOAD=${JULIA_DOWNLOAD:-"$HOME/packages/julias"}
   JULIA_INSTALL=${JULIA_INSTALL:-"$HOME/.local/bin"}
 fi
-WGET="wget --retry-connrefused -t 3"
+WGET="wget --retry-connrefused -t 3 -q"
 
 function header() {
   echo "JILL - Julia Installer 4 Linux (and MacOS) - Light"
