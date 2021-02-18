@@ -20,4 +20,4 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Test script
-        run: bash ci-test.sh
+        run: bash -eu ci-test.sh
