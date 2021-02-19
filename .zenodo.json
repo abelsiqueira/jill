@@ -1,6 +1,6 @@
 {
   "description": "Command line installer for Julia.",
-  "license": "GPLv3",
+  "license": "gpl-3.0",
   "title": "jill - A Julia installer for Linux - light",
   "upload_type": "software",
   "publication_date": "2021-02-19",
