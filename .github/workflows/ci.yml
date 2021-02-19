@@ -26,4 +26,4 @@ jobs:
           VERSION: ${{ matrix.jlversion }}
         run: |
           export PATH="/home/runner/.local/bin:$PATH"
-          bash ci-test.sh
+          bash -e ci-test.sh
