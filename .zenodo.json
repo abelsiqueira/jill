@@ -1,0 +1,14 @@
+{
+  "description": "Command line installer for Julia.",
+  "license": "GPLv3",
+  "title": "jill - A Julia installer for Linux - light",
+  "upload_type": "software",
+  "publication_date": "2021-02-19",
+  "creators": [
+      {
+          "affiliation": "Federal University of Paran\u00e1 - UFPR",
+          "name": "Abel Soares Siqueira"
+      }
+  ],
+  "access_right": "open"
+}
