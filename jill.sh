@@ -27,6 +27,7 @@ Install some version of the julia executable. By default, the latest version (cu
 Options and arguments:
   -h, --help              : Show this help
   --lts                   : Install julia long term support version (Currently $JULIA_LTS)
+  --rc                    : Install julia latest release candidate (requires jq)
   -u OLD, --upgrade OLD   : Copy environment from OLD version
   -v VER, --version VER   : Install julia version VER. Valid examples: 1.5.3, 1.5-latest, 1.5.0-rc1.
   -y, --yes, --no-confirm : Skip confirmation
@@ -57,6 +58,19 @@ case $key in
       ;;
     --lts)
       JULIA_VERSION=$JULIA_LTS
+      shift
+      ;;
+    --rc)
+      if ! command -v jq --version &> /dev/null
+      then
+        echo "Option --rc requires jq to be installed. Alternatively, use -v with x.y.z-rcN. Aborting"
+        exit 1
+      fi
+      JULIA_VERSION=$(curl -L https://julialang-s3.julialang.org/bin/versions.json | jq -r '[keys[] | select(contains("rc"))] | .[-1]')
+      if [ -z "$JULIA_VERSION"]; then
+        echo "Option --rc failed."
+        exit 1
+      fi
       shift
       ;;
     -u|--upgrade)
