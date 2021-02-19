@@ -153,6 +153,11 @@ function install_julia_linux() {
   if [[ "$LATEST" == "1" ]]; then
     # Need to change suffix x.y-latest to x.y.z
     JLVERSION=$(./julia-$version/bin/julia -version | cut -d' ' -f3)
+    if [ -d julia-$JLVERSION ]; then
+      echo "Latest version $JLVERSION was already installed. Aborting."
+      rm -rf julia-$version.tar.gz julia-$version
+      return
+    fi
     mv julia-$version.tar.gz julia-$JLVERSION.tar.gz
     mv julia-$version julia-$JLVERSION
     version=$JLVERSION
