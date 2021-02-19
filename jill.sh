@@ -110,7 +110,7 @@ fi
 WGET="wget --retry-connrefused -t 3 -q"
 
 function header() {
-  echo "JILL - Julia Installer 4 Linux (and MacOS) - Light"
+  echo "JILL - Julia Installer 4 Linux - Light"
   echo "Copyright (C) 2017-2021 Abel Soares Siqueira <abel.s.siqueira@gmail.com>"
   echo "Distributed under terms of the GPLv3 license."
   echo ""
@@ -244,6 +244,7 @@ function install_julia_linux() {
 }
 
 function install_julia_mac() {
+  echo "Warning: MacOS installation is deprecated and untested. If you'd like to help maintain it, get in touch via https://github.com/abelsiqueira/jill"
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
   arch="mac64"
