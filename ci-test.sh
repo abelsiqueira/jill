@@ -38,3 +38,11 @@ julia -e 'using Pkg; Pkg.update(); Pkg.add("Example")'
 msg "Upgrading to the latest Julia"
 bash jill.sh -y -u 1.0.5
 julia -e 'using Pkg; Pkg.status()' | grep Example
+
+msg "Installing release candidate version"
+bash jill.sh --rc -y
+RC=$(julia -v | cut -d' ' -f3)
+
+msg "Testing if the version is correct"
+[[ $(julia-$RC -v) == "julia version $RC" ]]
+curl https://julialang-s3.julialang.org/bin/versions.json
