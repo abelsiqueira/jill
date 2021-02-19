@@ -16,23 +16,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+JULIA_LTS=1.0.3
 JULIA_LATEST=1.5
 
 function usage() {
-  echo """usage: jill.sh [option]
+  echo """usage: jill.sh [options]
+
+Install some version of the julia executable. By default, the latest version (currently $JULIA_LATEST-latest) is installed.
 
 Options and arguments:
-  -h     : Show this help
-  -y     : Skip confirmation
-  -u old : Copy environment from 'old' version
+  -h, --help              : Show this help
+  --lts                   : Install julia long term support version (Currently $JULIA_LTS)
+  -u OLD, --upgrade OLD   : Copy environment from OLD version
+  -v VER, --version VER   : Install julia version VER. Valid examples: 1.5.3, 1.5-latest, 1.5.0-rc1.
+  -y, --yes, --no-confirm : Skip confirmation
 
 Environment variables:
   JULIA_DOWNLOAD: Folder where the julia .tar.gz file will be downloaded and its contents will be decompressed.
     Defaults to /opt/julias when called by root or $HOME/packages/julias otherwise.
   JULIA_INSTALL: Folder where the julia link will be created.
     Defaults to /usr/local/bin when called by root or $HOME/.local/bin otherwise.
-  JULIA_VERSION: Which version shall be installed.
-    Defaults to $JULIA_LATEST-latest
 """
 }
 
@@ -52,17 +55,26 @@ case $key in
       shift
       exit 0
       ;;
-    -y|--yes|--no-confirm)
-      SKIP_CONFIRM=1
+    --lts)
+      JULIA_VERSION=$JULIA_LTS
       shift
       ;;
-    -u|--upgrade|--copy-env)
+    -u|--upgrade)
       JULIA_OLD="$2"
       shift
       shift
       ;;
+    -v|--version)
+      JULIA_VERSION="$2"
+      shift
+      shift
+      ;;
+    -y|--yes|--no-confirm)
+      SKIP_CONFIRM=1
+      shift
+      ;;
     *)    # unknown option
-      echo "Invalid option: -$OPTARG" >&2
+      echo "Invalid option: $1" >&2
       usage
       exit 1;
       ;;
@@ -122,7 +134,7 @@ function hi() {
   fi
   echo "This script will:"
   echo ""
-  echo "  - Download julia $version"
+  echo "  - Try to download julia version '$version'"
   echo "  - Create a link for julia"
   echo "  - Create a link for julia-VER"
   echo ""
