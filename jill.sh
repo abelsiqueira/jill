@@ -16,13 +16,37 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+JULIA_LATEST=1.5
+
+function usage() {
+  echo """usage: jill.sh [option]
+
+Options and arguments:
+  -h     : Show this help
+  -y     : Skip confirmation
+  -u old : Copy environment from 'old' version
+
+Environment variables:
+  JULIA_DOWNLOAD: Folder where the julia .tar.gz file will be downloaded and its contents will be decompressed.
+    Defaults to /opt/julias when called by root or $HOME/packages/julias otherwise.
+  JULIA_INSTALL: Folder where the julia link will be created.
+    Defaults to /usr/local/bin when called by root or $HOME/.local/bin otherwise.
+  JULIA_VERSION: Which version shall be installed.
+    Defaults to $JULIA_LATEST-latest
+"""
+}
+
 # Skip confirm if -y is used.
 SKIP_CONFIRM=0
 # Copy over the old environment to the new one if -u is used.
 UPGRADE_CONFIRM=0
 JULIA_OLD=""
-while getopts ":ysu:" opt; do
+while getopts ":yhu:" opt; do
   case $opt in
+    h)
+      usage
+      exit 0
+      ;;
     y)
       SKIP_CONFIRM=1
       ;;
@@ -32,12 +56,16 @@ while getopts ":ysu:" opt; do
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
+      usage
       exit 1;
+      ;;
+    :)
+      echo "Option -$OPTARG needs arguments."
+      usage
+      exit 1
       ;;
   esac
 done
-
-JULIA_LATEST=1.5
 
 # For Linux, this script installs Julia into $JULIA_DOWNLOAD and make a
 # link to $JULIA_INSTALL
@@ -56,6 +84,7 @@ function header() {
   echo "JILL - Julia Installer 4 Linux (and MacOS) - Light"
   echo "Copyright (C) 2017-2021 Abel Soares Siqueira <abel.s.siqueira@gmail.com>"
   echo "Distributed under terms of the GPLv3 license."
+  echo ""
 }
 
 function badfolder() {
@@ -82,9 +111,16 @@ function hi() {
     badfolder
   fi
   mkdir -p $JULIA_INSTALL # won't create if it's aborted earlier
+  LATEST=0
+  if [ -n "${JULIA_VERSION+set}" ]; then
+    version=$JULIA_VERSION
+  else
+    LATEST=1
+    version=$JULIA_LATEST-latest
+  fi
   echo "This script will:"
   echo ""
-  echo "  - Download latest stable Julia"
+  echo "  - Download julia $version"
   echo "  - Create a link for julia"
   echo "  - Create a link for julia-VER"
   echo ""
@@ -154,12 +190,12 @@ function install_julia_linux() {
     # Need to change suffix x.y-latest to x.y.z
     JLVERSION=$(./julia-$version/bin/julia -version | cut -d' ' -f3)
     if [ -d julia-$JLVERSION ]; then
-      echo "Latest version $JLVERSION was already installed. Aborting."
+      echo "Warning: Latest version $JLVERSION was already installed. Ignoring downloaded version."
       rm -rf julia-$version.tar.gz julia-$version
-      return
+    else
+      mv julia-$version.tar.gz julia-$JLVERSION.tar.gz
+      mv julia-$version julia-$JLVERSION
     fi
-    mv julia-$version.tar.gz julia-$JLVERSION.tar.gz
-    mv julia-$version julia-$JLVERSION
     version=$JLVERSION
   fi
 
