@@ -2,56 +2,65 @@
   <img width="150" align='right' src="jill.jpg">
 </p>
 
-# JILL - Julia Installer 4 Linux (and MacOS) - Light
+# jill - Julia Installer 4 Linux - Light
 
-[![Build
-Status](https://travis-ci.org/abelsiqueira/jill.svg?branch=master)](https://travis-ci.org/abelsiqueira/jill)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/abelsiqueira/jill/CI?style=flat-square)
 
-Simply install latest [Julia](https://julialang.org) for Linux and MacOS. For more functionality and flexibility you can try the python fork [jill.py](https://github.com/johnnychen94/jill.py)
+[Julia](https://julialang.org) light installer for Linux.
 
-Last tested version: ![Julia 1.5.3](https://img.shields.io/badge/julia-1.5.3-3a5fcc.svg?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAB+FBMVEUAAAA3lyU3liQ4mCY4mCY3lyU4lyY1liM3mCUskhlSpkIvkx0zlSEeigo5mSc8mio0liKPxYQ/nC5NozxQpUBHoDY3lyQ5mCc3lyY6mSg3lyVPpD9frVBgrVFZqUpEnjNgrVE3lyU8mio8mipWqEZhrVJgrVFfrE9JoTkAVAA3lyXJOjPMPjNZhCowmiNOoz1erE9grVFYqUhCnjFmk2KFYpqUV7KTWLDKOjK8CADORj7GJx3SJyVAmCtKojpOoz1DnzFVeVWVSLj///+UV7GVWbK8GBjPTEPMQTjPTUXQUkrQSEGZUycXmg+WXbKfZ7qgarqbYraSVLCUV7HLPDTKNy7QUEjUYVrVY1zTXFXPRz2UVLmha7upeMCqecGlcb6aYLWfaLrLPjXLPjXSWFDVZF3VY1zVYlvRTkSaWKqlcr6qesGqecGpd8CdZbjo2+7LPTTKOS/QUUnVYlvVY1zUXVbPSD6TV7OibLuqecGqecGmc76aYbaibLvKOC/SWlPMQjrQUEjRVEzPS0PLPDL7WROZX7WgarqibLucY7eTVrCVWLLLOzLGLCLQT0bIMynKOC7FJx3MPjV/Vc+odsCRUa+SVLCDPaWVWLKWWrLJOzPHOTLKPDPLPDPLOzLLPDOUV6+UV7CVWLKVWLKUV7GUWLGPUqv///8iGqajAAAAp3RSTlMAAAAAAAAAAAAAABAZBAAAAABOx9uVFQAAAB/Y////eQAAADv0////pgEAAAAAGtD///9uAAAAAAAAAAcOQbPLfxgNAAAAAAA5sMyGGg1Ht8p6CwAAFMf///94H9j///xiAAAw7////65K+f///5gAABjQ////gibg////bAAAAEfD3JwaAFfK2o0RAAAAAA4aBQAAABEZAwAAAAAAAAAAAAAAAAAAAIvMfRYAAAA6SURBVAjXtcexEUBAFAXAfTM/IDH6uAbUqkItyAQYR26zDeS0UxieBvPVbArjXd9GS295raa/Gmu/A7zfBRgv03cCAAAAAElFTkSuQmCC)
+Last stable tested version: ![Julia 1.5.3](https://img.shields.io/badge/julia-1.5.3-3a5fcc.svg?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAB+FBMVEUAAAA3lyU3liQ4mCY4mCY3lyU4lyY1liM3mCUskhlSpkIvkx0zlSEeigo5mSc8mio0liKPxYQ/nC5NozxQpUBHoDY3lyQ5mCc3lyY6mSg3lyVPpD9frVBgrVFZqUpEnjNgrVE3lyU8mio8mipWqEZhrVJgrVFfrE9JoTkAVAA3lyXJOjPMPjNZhCowmiNOoz1erE9grVFYqUhCnjFmk2KFYpqUV7KTWLDKOjK8CADORj7GJx3SJyVAmCtKojpOoz1DnzFVeVWVSLj///+UV7GVWbK8GBjPTEPMQTjPTUXQUkrQSEGZUycXmg+WXbKfZ7qgarqbYraSVLCUV7HLPDTKNy7QUEjUYVrVY1zTXFXPRz2UVLmha7upeMCqecGlcb6aYLWfaLrLPjXLPjXSWFDVZF3VY1zVYlvRTkSaWKqlcr6qesGqecGpd8CdZbjo2+7LPTTKOS/QUUnVYlvVY1zUXVbPSD6TV7OibLuqecGqecGmc76aYbaibLvKOC/SWlPMQjrQUEjRVEzPS0PLPDL7WROZX7WgarqibLucY7eTVrCVWLLLOzLGLCLQT0bIMynKOC7FJx3MPjV/Vc+odsCRUa+SVLCDPaWVWLKWWrLJOzPHOTLKPDPLPDPLOzLLPDOUV6+UV7CVWLKVWLKUV7GUWLGPUqv///8iGqajAAAAp3RSTlMAAAAAAAAAAAAAABAZBAAAAABOx9uVFQAAAB/Y////eQAAADv0////pgEAAAAAGtD///9uAAAAAAAAAAcOQbPLfxgNAAAAAAA5sMyGGg1Ht8p6CwAAFMf///94H9j///xiAAAw7////65K+f///5gAABjQ////gibg////bAAAAEfD3JwaAFfK2o0RAAAAAA4aBQAAABEZAwAAAAAAAAAAAAAAAAAAAIvMfRYAAAA6SURBVAjXtcexEUBAFAXAfTM/IDH6uAbUqkItyAQYR26zDeS0UxieBvPVbArjXd9GS295raa/Gmu/A7zfBRgv03cCAAAAAElFTkSuQmCC)
+
+---
 
 On Linux, the best way to install Julia is to use the Generic Linux
 Binaries. And while **all Linux users** love manually downloading,
 unpacking, and linking their software, this script does it for you.
 
+_Disclaimer: MacOS support was dropped. Let me know if you want to help maintain it._
+## Quick version - Install latest stable linux
+
 Simply run
-
-    bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
-
-installs Julia into `$HOME/.local/bin`.
-
-If you want to install Julia system-wide, you can add an `sudo` prefix
 
     sudo bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
 
-If you want to install to other places, you can specify the `JULIA_DOWNLOAD` and `JULIA_INSTALL` folder
+Sudo is optional. If you prefer to not use it, make sure to add `$HOME/.local/bin` to your `PATH`.
 
-    JULIA_DOWNLOAD=downloadfolder JULIA_INSTALL=linkfolder bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+## More options - Download jill.sh
 
-The script will then download Julia in `JULIA_DOWNLOAD` and make a link to `JULIA_INSTALL`.
+Either download the jill.sh script, e.g.
 
-To download a specific older version, use
+    wget https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh
 
-    JULIA_VERSION=x.y.z bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+or
 
-Where `x.y.z` is the desired version.
+    curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh > jill.sh
 
-## Alternative to curl and updating previous installations
+or clone the full repo (for instance, if you had SSL issues as in #32):
 
-Instead of downloading the file with curl (for instance, if you had SSL issues as in #32), you can download or clone the repo on it's entirety using `git` or the download button. Then, open a terminal in the downloaded folder and enter
+    git clone https://github.com/abelsiqueira/jill
 
-    bash jill.sh
+You can use the script via `bash jill.sh` or make it executable using `chmod a+x jill.sh`. We'll use the former version here.
 
-Other options, as described above, still apply. In addition, if you wish to upgrade Julia and copy over the old environment to the new one, run the following:
+**Usage**:
 
-    bash jill.sh -u x.y.z
+    bash jill.sh [options]
 
-Where `x.y.z` is your current version.
+If no options are given, this will install the latest stable Julia.
+The .tar.gz and unpacked folder will be kept on the environment variable `JULIA_DOWNLOAD`, and the `julia` executable will be linked in `JULIA_INSTALL`.
 
-If you wish to run the install script without interactive prompts, please clone this repository and run the following:
+By default, we use
 
-    bash jill.sh -y
+- `JULIA_DOWNLOAD=/opt/julias` and `JULIA_INSTALL=/usr/local/bin` if you have root permission (e.g. called with `sudo`).
+- `JULIA_DOWNLOAD=$HOME/packages/julias` and `JULIA_INSTALL=$HOME/.local/bin` otherwise.
+
+The following options are avaiable:
+
+- `-h, --help`: Show a help.
+- `--lts`: Install the Long Term Support version (Currently 1.0.5).
+- `--rc`: Install the latest release candidate (uses `jq` to query the versions from julialang.org).
+- `-u OLD, --upgrade OLD`: Copy the environment from OLD version.
+- `-v VER, --version VER`: Install julia version VER. Valid examples: 1.5.3, 1.5-latest, 1.5.0-rc1.
+- `-y, --yes, --no-confirm`: Skip confirmation.
 
 ## LICENSE
 
