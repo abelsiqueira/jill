@@ -60,6 +60,7 @@ case $key in
       shift
       ;;
     -u|--upgrade)
+      UPGRADE_CONFIRM=1
       JULIA_OLD="$2"
       shift
       shift
