@@ -41,30 +41,32 @@ SKIP_CONFIRM=0
 # Copy over the old environment to the new one if -u is used.
 UPGRADE_CONFIRM=0
 JULIA_OLD=""
-while getopts ":yhu:" opt; do
-  case $opt in
-    h)
+
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -h|--help)
       usage
+      shift
       exit 0
       ;;
-    y)
+    -y|--yes|--no-confirm)
       SKIP_CONFIRM=1
+      shift
       ;;
-    u)
-      UPGRADE_CONFIRM=1
-      JULIA_OLD=${OPTARG}
+    -u|--upgrade|--copy-env)
+      JULIA_OLD="$2"
+      shift
+      shift
       ;;
-    \?)
+    *)    # unknown option
       echo "Invalid option: -$OPTARG" >&2
       usage
       exit 1;
       ;;
-    :)
-      echo "Option -$OPTARG needs arguments."
-      usage
-      exit 1
-      ;;
-  esac
+esac
 done
 
 # For Linux, this script installs Julia into $JULIA_DOWNLOAD and make a
