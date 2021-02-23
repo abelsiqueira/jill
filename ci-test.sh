@@ -45,4 +45,3 @@ RC=$(julia -v | cut -d' ' -f3)
 
 msg "Testing if the version is correct"
 [[ $(julia-$RC -v) == "julia version $RC" ]]
-curl https://julialang-s3.julialang.org/bin/versions.json
