@@ -250,9 +250,11 @@ function install_julia_mac() {
   arch="mac64"
 
   # Download specific version if requested
+  LATEST=0
   if [ -n "${JULIA_VERSION+set}" ]; then
     version=$JULIA_VERSION
   else
+    LATEST=1
     version=$JULIA_LATEST-latest
   fi
   if [ ! -f julia-$version.dmg ]; then
@@ -262,12 +264,17 @@ function install_julia_mac() {
 
   major=${version:0:3}
 
-  hdiutil attach julia-$version.dmg -quiet -mount required -mountpoint julia-$version
+  hdiutil attach julia-$version.dmg -quiet -mount required -mountpoint julia-$major
+  if [ ! -d julia-$major ]; then
+      # if it fails to mount for unknown reason, try it again after 1 second...
+      sleep 1
+      hdiutil attach julia-$version.dmg -quiet -mount required -mountpoint julia-$major
+  fi
 
   INSTALL_PATH=/Applications/julia-$major.app
   EXEC_PATH=$INSTALL_PATH/Contents/Resources/julia/bin/julia
   rm -rf $INSTALL_PATH
-  cp -a julia-$version/Julia-$major.app /Applications/
+  cp -a julia-$major/Julia-$major.app /Applications/
 
   if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
     old_major=${JULIA_OLD:0:3}
@@ -277,10 +284,14 @@ function install_julia_mac() {
   # create symlink
   ln -sf $EXEC_PATH $JULIA_INSTALL/julia
   ln -sf $EXEC_PATH $JULIA_INSTALL/julia-$major
+  
+  if [[ "$LATEST" == "1" ]]; then
+    version=$($JULIA_INSTALL/julia -version | cut -d' ' -f3)
+  fi
   ln -sf $EXEC_PATH $JULIA_INSTALL/julia-$version
 
   # post-installation
-  umount julia-$version
+  umount julia-$major
 }
 
 # --------------------------------------------------------
