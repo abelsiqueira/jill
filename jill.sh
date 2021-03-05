@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 # jill.sh
 # Copyright (C) 2017-2021 Abel Soares Siqueira <abel.s.siqueira@gmail.com>
 #
