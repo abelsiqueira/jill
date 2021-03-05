@@ -67,7 +67,7 @@ case $key in
         exit 1
       fi
       JULIA_VERSION=$(curl -L https://julialang-s3.julialang.org/bin/versions.json | jq -r '[keys[] | select(contains("rc"))] | .[-1]')
-      if [ -z "$JULIA_VERSION"]; then
+      if [ -z "$JULIA_VERSION" ]; then
         echo "Option --rc failed."
         exit 1
       fi
