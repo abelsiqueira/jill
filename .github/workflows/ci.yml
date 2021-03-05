@@ -22,9 +22,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: add symlink dir to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Test script
         env:
           VERSION: ${{ matrix.jlversion }}
-        run: |
-          export PATH="/home/runner/.local/bin:$PATH"
-          bash -e ci-test.sh
+        run: bash -e ci-test.sh
