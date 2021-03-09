@@ -244,7 +244,6 @@ function install_julia_linux() {
 }
 
 function install_julia_mac() {
-  echo "Warning: MacOS installation is deprecated and untested. If you'd like to help maintain it, get in touch via https://github.com/abelsiqueira/jill"
   mkdir -p $JULIA_DOWNLOAD
   cd $JULIA_DOWNLOAD
   arch="mac64"
