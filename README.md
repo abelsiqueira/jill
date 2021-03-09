@@ -17,7 +17,6 @@ On Linux, the best way to install Julia is to use the Generic Linux
 Binaries. And while **all Linux users** love manually downloading,
 unpacking, and linking their software, this script does it for you.
 
-_Disclaimer: MacOS support was dropped. Let me know if you want to help maintain it._
 ## Quick version - Install latest stable linux
 
 Simply run
