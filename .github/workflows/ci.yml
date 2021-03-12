@@ -17,17 +17,8 @@ jobs:
 
     strategy:
       matrix:
-        jlversion: [1.5.4]
+        jlversion: [0.5.2, 1.0.5, 1.3.0, 1.5.4, 1.6.0-rc2]
         os: [ubuntu-latest, macos-latest]
-        include:
-          - jlversion: 0.5.2
-            os: ubuntu-latest
-          - jlversion: 1.0.5
-            os: ubuntu-latest
-          - jlversion: 1.3.0
-            os: ubuntu-latest
-          - jlversion: 1.6.0-rc2
-            os: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
