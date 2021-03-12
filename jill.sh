@@ -29,7 +29,7 @@ Options and arguments:
   --lts                   : Install julia long term support version (Currently $JULIA_LTS)
   --rc                    : Install julia latest release candidate (requires jq)
   -u OLD, --upgrade OLD   : Copy environment from OLD version
-  -v VER, --version VER   : Install julia version VER. Valid examples: 1.5.3, 1.5-latest, 1.5.0-rc1.
+  -v VER, --version VER   : Install julia version VER. Valid examples: 1.5.4, 1.5-latest, 1.5.0-rc1.
   -y, --yes, --no-confirm : Skip confirmation
 
 Environment variables:
