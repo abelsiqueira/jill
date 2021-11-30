@@ -16,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-JULIA_LTS=1.0.5
-JULIA_LATEST=1.6
+JULIA_LTS=1.6.4
+JULIA_LATEST=1.7
 
 function usage() {
   echo """usage: jill.sh [options]
@@ -283,7 +283,7 @@ function install_julia_mac() {
   # create symlink
   ln -sf $EXEC_PATH $JULIA_INSTALL/julia
   ln -sf $EXEC_PATH $JULIA_INSTALL/julia-$major
-  
+
   if [[ "$LATEST" == "1" ]]; then
     version=$($JULIA_INSTALL/julia -version | cut -d' ' -f3)
   fi
