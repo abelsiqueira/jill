@@ -31,12 +31,12 @@ bash jill.sh -y
 
 msg "Installing Julia LTS version"
 bash jill.sh -y --lts
-[[ $(julia-1.0.5 -v) == "julia version 1.0.5" ]]
+[[ $(julia-1.6.4 -v) == "julia version 1.6.4" ]]
 
 julia -e 'using Pkg; Pkg.update(); Pkg.add("Example")'
 
 msg "Upgrading to the latest Julia"
-bash jill.sh -y -u 1.0.5
+bash jill.sh -y -u 1.6.4
 julia -e 'using Pkg; Pkg.status()' | grep Example
 
 msg "Installing release candidate version"
