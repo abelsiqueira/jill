@@ -24,7 +24,7 @@ unpacking, and linking their software, this script does it for you.
 
 Simply run
 
-    sudo bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh)"
+    sudo bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh)"
 
 Sudo is optional. If you prefer to not use it, make sure to add `$HOME/.local/bin` to your `PATH`.
 
@@ -32,11 +32,11 @@ Sudo is optional. If you prefer to not use it, make sure to add `$HOME/.local/bi
 
 Either download the jill.sh script, e.g.
 
-    wget https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh
+    wget https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh
 
 or
 
-    curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/master/jill.sh > jill.sh
+    curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh > jill.sh
 
 or clone the full repo (for instance, if you had SSL issues as in #32):
 
