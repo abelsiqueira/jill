@@ -59,7 +59,7 @@ By default, we use
 The following options are avaiable:
 
 - `-h, --help`: Show a help.
-- `--lts`: Install the Long Term Support version (Currently 1.0.5).
+- `--lts`: Install the Long Term Support version (Currently 1.6.4).
 - `--rc`: Install the latest release candidate (uses `jq` to query the versions from julialang.org).
 - `-u OLD, --upgrade OLD`: Copy the environment from OLD version.
 - `-v VER, --version VER`: Install julia version VER. Valid examples: 1.5.4, 1.5-latest, 1.5.0-rc1.
