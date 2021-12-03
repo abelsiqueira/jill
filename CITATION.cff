@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: jill - A Julia installer for Linux - light
+message: Please cite this software using these metadata.
+type: software
+authors:
+  - given-names: Abel
+    family-names: Soares Siqueira
+    email: abel.s.siqueira@gmail.com
+    affiliation: Netherlands eScience Center
+    orcid: 'https://orcid.org/0000-0003-4451-281X'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.4552552
+    description: Digital identifier from Zenodo
+repository: 'https://github.com/abelsiqueira/jill'
+abstract: Jill is a Julia installer script in Bash.
+keywords:
+  - julia
+  - julialang
+  - installer
+  - bash
+license: GPL-3.0

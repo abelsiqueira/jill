@@ -1,13 +1,20 @@
 {
-  "description": "Command line installer for Julia.",
-  "license": "gpl-3.0",
-  "title": "jill - A Julia installer for Linux - light",
-  "upload_type": "software",
   "creators": [
-      {
-          "affiliation": "Federal University of Paran\u00e1 - UFPR",
-          "name": "Abel Soares Siqueira"
-      }
+    {
+      "affiliation": "Netherlands eScience Center",
+      "name": "Soares Siqueira, Abel",
+      "orcid": "0000-0003-4451-281X"
+    }
   ],
-  "access_right": "open"
+  "description": "Jill is a Julia installer script in Bash.",
+  "keywords": [
+    "julia",
+    "julialang",
+    "installer",
+    "bash"
+  ],
+  "license": {
+    "id": "GPL-3.0"
+  },
+  "title": "jill - A Julia installer for Linux - light"
 }
