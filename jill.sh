@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-JULIA_LTS=1.6.4
+JULIA_LTS=1.6.5
 JULIA_LATEST=1.7
 
 function usage() {
