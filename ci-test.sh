@@ -31,7 +31,7 @@ bash jill.sh -y
 
 msg "Installing Julia LTS version"
 bash jill.sh -y --lts
-[[ $(julia-1.6.4 -v) == "julia version 1.6.4" ]]
+[[ $(julia-1.6.5 -v) == "julia version 1.6.5" ]]
 
 julia -e 'using Pkg; Pkg.update(); Pkg.add("Example")'
 
