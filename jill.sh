@@ -188,8 +188,7 @@ function get_url_from_platform_arch_version() {
 
 function install_julia_linux() {
   mkdir -p "$JULIA_DOWNLOAD"
-  # shellcheck disable=SC2164
-  cd "$JULIA_DOWNLOAD"
+  cd "$JULIA_DOWNLOAD" || exit 1
   arch=$(uname -m)
 
   # Download specific version if requested
@@ -245,8 +244,7 @@ function install_julia_linux() {
 
 function install_julia_mac() {
   mkdir -p "$JULIA_DOWNLOAD"
-  # shellcheck disable=SC2164
-  cd "$JULIA_DOWNLOAD"
+  cd "$JULIA_DOWNLOAD" || exit 1
   arch="mac64"
 
   # Download specific version if requested
