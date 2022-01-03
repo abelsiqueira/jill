@@ -1,6 +1,11 @@
-#! /bin/sh
+#!/usr/bin/env bash
 
-function msg() {
+if [ -z "$VERSION" ]; then
+  echo "Variable VERSION must be set"
+  exit 1
+fi
+
+msg() {
   echo -e "\033[0;31m$1\033[0m"
 }
 
@@ -11,20 +16,20 @@ msg "Testing julia is installed"
 julia -v
 
 version=$(julia -v | grep "[0-9]*\.[0-9]*\.[0-9]*" -o)
-major=$(echo $version | cut -d. -f1-2)
+major=$(echo "$version" | cut -d. -f1-2)
 
 msg "Testing julia-x.y.z is installed"
-julia-$version -v
+julia-"$version" -v
 
 msg "Testing julia-x-y is installed"
-julia-$major -v
+julia-"$major" -v
 
 msg "Installing specific Julia version"
-echo "yy" | bash jill.sh --version $VERSION
-julia-$VERSION -v
+echo "yy" | bash jill.sh --version "$VERSION"
+julia-"$VERSION" -v
 
 msg "Testing if the version is correct"
-[[ $(julia-$VERSION -v) == "julia version $VERSION" ]]
+[[ $(julia-"$VERSION" -v) == "julia version $VERSION" ]]
 
 msg "Installing latest Julia without interactive prompt"
 bash jill.sh -y
@@ -44,4 +49,4 @@ bash jill.sh --rc -y
 RC=$(julia -v | cut -d' ' -f3)
 
 msg "Testing if the version is correct"
-[[ $(julia-$RC -v) == "julia version $RC" ]]
+[[ $(julia-"$RC" -v) == "julia version $RC" ]]
