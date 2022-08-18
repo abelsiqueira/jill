@@ -16,8 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-JULIA_LTS=1.6.5
-JULIA_LATEST=1.7
+JULIA_LTS=1.6.7
+JULIA_LATEST=1.8
 
 function usage() {
   echo "usage: jill.sh [options]
@@ -111,7 +111,7 @@ WGET="wget --retry-connrefused -t 3 -q"
 
 function header() {
   echo "JILL - Julia Installer 4 Linux - Light"
-  echo "Copyright (C) 2017-2021 Abel Soares Siqueira <abel.s.siqueira@gmail.com>"
+  echo "Copyright (C) 2017-2022 Abel Soares Siqueira <abel.s.siqueira@gmail.com>"
   echo "Distributed under terms of the GPLv3 license."
   echo ""
 }
