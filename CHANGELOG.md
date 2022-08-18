@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Julia LTS changed to 1.6.7
+- Julia latest changed to 1.8.0
+
 ## [0.4.1] - 2022-08-18
 
 ### Added
