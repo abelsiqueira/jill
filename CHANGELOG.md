@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Create CITATION.cff and update zenodo
 - Create CHANGELOG
+- shellcheck linter
+
+### Changed
+- Julia LTS changed to 1.6.5
+
+### Fixed
+- Linting issues raised by shellcheck
 
 ## [0.4.0] - 2021-12-02
 
