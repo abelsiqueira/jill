@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.5.0] - 2022-08-18
+
 ### Changed
 - Julia LTS changed to 1.6.7
 - Julia latest changed to 1.8.0
@@ -58,7 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 We didn't follow semantic versioning before, so this first tag has 4 years of work attached to it.
 
-[unreleased]: https://github.com/abelsiqueira/jill/compare/v0.4.1...HEAD
+[unreleased]: https://github.com/abelsiqueira/jill/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/abelsiqueira/jill/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/abelsiqueira/jill/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/abelsiqueira/jill/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/abelsiqueira/jill/compare/v0.2.1...v0.3.0
