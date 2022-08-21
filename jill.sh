@@ -233,7 +233,14 @@ function install_julia_linux() {
 
   if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
     old_major="${JULIA_OLD:0:3}"
-    cp -r ~/.julia/environments/"v${old_major}" ~/.julia/environments/"v${major}"
+    if [ "$USER" == "root" ] && [ -n "$SUDO_USER" ]; then
+      JULIAENV="/home/$SUDO_USER"
+    else
+      JULIAENV=$HOME
+    fi
+    JULIAENV="${JULIAENV}/.julia/environments"
+    echo "Copying environments in ${JULIAENV} from v${old_major} to v${major}"
+    cp -rp "${JULIAENV}/v${old_major}" "${JULIAENV}/v${major}"
   fi
 
   # create symlink
@@ -276,7 +283,14 @@ function install_julia_mac() {
 
   if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
     old_major="${JULIA_OLD:0:3}"
-    cp -r ~/.julia/environments/"v${old_major}" ~/.julia/environments/"v${major}"
+    if [ "$USER" == "root" ] && [ -n "$SUDO_USER" ]; then
+      JULIAENV="/Users/$SUDO_USER"
+    else
+      JULIAENV=$HOME
+    fi
+    JULIAENV="${JULIAENV}/.julia/environments"
+    echo "Copying environments in ${JULIAENV} from v${old_major} to v${major}"
+    cp -rp "${JULIAENV}/v${old_major}" "${JULIAENV}/v${major}"
   fi
 
   # create symlink
