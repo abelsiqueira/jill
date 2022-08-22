@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Permission and ownership issues when using -u option with sudo
+- Improved documentation for -u option
 
 ## [0.5.0] - 2022-08-18
 

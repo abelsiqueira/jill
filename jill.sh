@@ -25,12 +25,12 @@ function usage() {
 Install some version of the julia executable. By default, the latest version (currently $JULIA_LATEST-latest) is installed.
 
 Options and arguments:
-  -h, --help              : Show this help
-  --lts                   : Install julia long term support version (Currently $JULIA_LTS)
-  --rc                    : Install julia latest release candidate (requires jq)
-  -u OLD, --upgrade OLD   : Copy environment from OLD version
-  -v VER, --version VER   : Install julia version VER. Valid examples: 1.5.4, 1.5-latest, 1.5.0-rc1.
-  -y, --yes, --no-confirm : Skip confirmation
+  -h, --help               : Show this help
+  --lts                    : Install julia long term support version (Currently $JULIA_LTS)
+  --rc                     : Install julia latest release candidate (requires jq)
+  -u M.m, --upgrade M.m    : Copy environment from M.m version (e.g. -u 1.6)
+  -v VER, --version VER    : Install julia version VER. Valid examples: 1.5.4, 1.5-latest, 1.5.0-rc1.
+  -y, --yes, --no-confirm  : Skip confirmation
 
 Environment variables:
   JULIA_DOWNLOAD: Folder where the julia .tar.gz file will be downloaded and its contents will be decompressed.
