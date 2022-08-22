@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Permission and ownership issues when using -u option with sudo
+
 ## [0.5.0] - 2022-08-18
 
 ### Changed
