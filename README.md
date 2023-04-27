@@ -4,7 +4,7 @@
 
 # jill - Julia Installer 4 Linux - Light
 
-[![GitHub Workflow Status](https://github.com/abelsiqueira/jill/actions/workflows/blank.yml/badge.svg)](https://github.com/abelsiqueira/jill/actions/workflows/blank.yml)
+[![GitHub Workflow Status](https://github.com/abelsiqueira/jill/actions/workflows/ci.yml/badge.svg)](https://github.com/abelsiqueira/jill/actions/workflows/ci.yml)
 [![DOI](https://img.shields.io/badge/DOI-10.5281/zenodo.4552552-blue?style=flat-square)](https://zenodo.org/badge/latestdoi/110103530?style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/abelsiqueira/jill?color=purple&logo=github&style=flat-square)
 
