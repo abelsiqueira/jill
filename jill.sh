@@ -216,7 +216,7 @@ function install_julia_linux() {
   fi
   if [[ "$LATEST" == "1" ]]; then
     # Need to change suffix x.y-latest to x.y.z
-    JLVERSION=$(./julia-$version/bin/julia -version | cut -d' ' -f3)
+    JLVERSION=$(./julia-"$version"/bin/julia -version | cut -d' ' -f3)
     if [ -d "julia-$JLVERSION" ]; then
       echo "Warning: Latest version $JLVERSION was already installed. Ignoring downloaded version."
       rm -rf "julia-$version.tar.gz" "julia-$version"
