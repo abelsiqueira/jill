@@ -24,7 +24,9 @@ unpacking, and linking their software, this script does it for you.
 
 Simply run
 
-    sudo bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh)"
+```bash
+sudo bash -ci "$(curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh)"
+```
 
 Sudo is optional. If you prefer to not use it, make sure to add `$HOME/.local/bin` to your `PATH`.
 
@@ -32,21 +34,29 @@ Sudo is optional. If you prefer to not use it, make sure to add `$HOME/.local/bi
 
 Either download the jill.sh script, e.g.
 
-    wget https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh
+```bash
+wget https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh
+```
 
 or
 
-    curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh > jill.sh
+```bash
+curl -fsSL https://raw.githubusercontent.com/abelsiqueira/jill/main/jill.sh > jill.sh
+```
 
 or clone the full repo (for instance, if you had SSL issues as in #32):
 
-    git clone https://github.com/abelsiqueira/jill
+```bash
+git clone https://github.com/abelsiqueira/jill
+```
 
 You can use the script via `bash jill.sh` or make it executable using `chmod a+x jill.sh`. We'll use the former version here.
 
 **Usage**:
 
-    bash jill.sh [options]
+```bash
+bash jill.sh [options]
+```
 
 If no options are given, this will install the latest stable Julia.
 The .tar.gz and unpacked folder will be kept on the environment variable `JULIA_DOWNLOAD`, and the `julia` executable will be linked in `JULIA_INSTALL`.

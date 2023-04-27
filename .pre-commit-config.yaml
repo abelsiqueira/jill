@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.9.0
+    hooks:
+      - id: shellcheck
+  - repo: https://github.com/markdownlint/markdownlint
+    rev: v0.12.0
+    hooks:
+      - id: markdownlint
+        args: [ -r, "~MD013,~MD029,~MD024,~MD033" ]
+        exclude: "^.git"
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.10.3
+    hooks:
+      - id: markdown-link-check
