@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## [0.5.2] - 2023-05-09
+
+### Added
+
+- There is a workflow to automatically update Julia versions, based on the online versions.json.file
+
 ### Changed
 
+- Julia 1.9.0 was released
 - Julia latest changed to 1.8.1 in the tests and README
 
 ## [0.5.1] - 2022-08-22
@@ -82,7 +89,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 We didn't follow semantic versioning before, so this first tag has 4 years of work attached to it.
 
 <!-- markdown-link-check-disable -->
-[unreleased]: https://github.com/abelsiqueira/jill/compare/v0.5.1...HEAD
+[unreleased]: https://github.com/abelsiqueira/jill/compare/v0.5.2...HEAD
+[0.5.2]: https://github.com/abelsiqueira/jill/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/abelsiqueira/jill/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/abelsiqueira/jill/compare/v0.4.1...v0.5.0
 [0.4.1]: https://github.com/abelsiqueira/jill/compare/v0.4.0...v0.4.1
