@@ -178,8 +178,8 @@ function get_url_from_platform_arch_version() {
   platform=$1
   arch=$2
   version=$3
-  # TODO: Accept ARM and FreeBSD
   [[ $arch == *"64" ]] && bit=64 || bit=32
+  # TODO: Accept ARM and FreeBSD
   [[ $arch == "mac"* ]] && suffix=mac64.dmg || suffix="$platform-$arch.tar.gz"
   minor=$(echo "$version" | cut -d. -f1-2 | cut -d- -f1)
   url="https://julialang-s3.julialang.org/bin/$platform/x$bit/$minor/julia-$version-$suffix"
@@ -227,25 +227,25 @@ function install_julia_linux() {
     version="$JLVERSION"
   fi
 
-  major=${version:0:3}
-  rm -f "$JULIA_INSTALL"/julia{,-"$major",-"$version"}
+  minor=$(echo "$version" | cut -d. -f1-2 | cut -d- -f1)
+  rm -f "$JULIA_INSTALL"/julia{,-"$minor",-"$version"}
   julia="$PWD/julia-$version/bin/julia"
 
   if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
-    old_major="${JULIA_OLD:0:3}"
+    old_minor=$(echo "$JULIA_OLD" | cut -d. -f1,2 | cut -d- -f1)
     if [ "$USER" == "root" ] && [ -n "$SUDO_USER" ]; then
       JULIAENV="/home/$SUDO_USER"
     else
       JULIAENV=$HOME
     fi
     JULIAENV="${JULIAENV}/.julia/environments"
-    echo "Copying environments in ${JULIAENV} from v${old_major} to v${major}"
-    cp -rp "${JULIAENV}/v${old_major}" "${JULIAENV}/v${major}"
+    echo "Copying environments in ${JULIAENV} from v${old_minor} to v${minor}"
+    cp -rp "${JULIAENV}/v${old_minor}" "${JULIAENV}/v${minor}"
   fi
 
   # create symlink
   ln -s "$julia" "$JULIA_INSTALL/julia"
-  ln -s "$julia" "$JULIA_INSTALL/julia-$major"
+  ln -s "$julia" "$JULIA_INSTALL/julia-$minor"
   ln -s "$julia" "$JULIA_INSTALL/julia-$version"
 }
 
@@ -267,35 +267,35 @@ function install_julia_mac() {
     $WGET -c "$url" -O "julia-$version.dmg"
   fi
 
-  major="${version:0:3}"
+  minor=$(echo "$version" | cut -d. -f1,2 | cut -d- -f1)
 
-  hdiutil attach "julia-$version.dmg" -quiet -mount required -mountpoint "julia-$major"
-  if [ ! -d "julia-$major" ]; then
+  hdiutil attach "julia-$version.dmg" -quiet -mount required -mountpoint "julia-$minor"
+  if [ ! -d "julia-$minor" ]; then
       # if it fails to mount for unknown reason, try it again after 1 second...
       sleep 1
-      hdiutil attach "julia-$version.dmg" -quiet -mount required -mountpoint "julia-$major"
+      hdiutil attach "julia-$version.dmg" -quiet -mount required -mountpoint "julia-$minor"
   fi
 
-  INSTALL_PATH="/Applications/julia-$major.app"
+  INSTALL_PATH="/Applications/julia-$minor.app"
   EXEC_PATH="$INSTALL_PATH/Contents/Resources/julia/bin/julia"
   rm -rf "$INSTALL_PATH"
-  cp -a "julia-$major/Julia-$major.app" /Applications/
+  cp -a "julia-$minor/Julia-$minor.app" /Applications/
 
   if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
-    old_major="${JULIA_OLD:0:3}"
+    old_minor=$(echo "$JULIA_OLD" | cut -d. -f1,2 | cut -d- -f1)
     if [ "$USER" == "root" ] && [ -n "$SUDO_USER" ]; then
       JULIAENV="/Users/$SUDO_USER"
     else
       JULIAENV=$HOME
     fi
     JULIAENV="${JULIAENV}/.julia/environments"
-    echo "Copying environments in ${JULIAENV} from v${old_major} to v${major}"
-    cp -rp "${JULIAENV}/v${old_major}" "${JULIAENV}/v${major}"
+    echo "Copying environments in ${JULIAENV} from v${old_minor} to v${minor}"
+    cp -rp "${JULIAENV}/v${old_minor}" "${JULIAENV}/v${minor}"
   fi
 
   # create symlink
   ln -sf "$EXEC_PATH" "$JULIA_INSTALL/julia"
-  ln -sf "$EXEC_PATH" "$JULIA_INSTALL/julia-$major"
+  ln -sf "$EXEC_PATH" "$JULIA_INSTALL/julia-$minor"
 
   if [[ "$LATEST" == "1" ]]; then
     version="$("$JULIA_INSTALL"/julia -version | cut -d' ' -f3)"
@@ -303,7 +303,7 @@ function install_julia_mac() {
   ln -sf "$EXEC_PATH" "$JULIA_INSTALL/julia-$version"
 
   # post-installation
-  umount "julia-$major"
+  umount "julia-$minor"
 }
 
 # --------------------------------------------------------
