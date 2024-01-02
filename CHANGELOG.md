@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Changed
+
+- Rename internal variables from major to minor
+
+### Fixed
+
+- Fix parsing of version when computing major
+
 ## [0.5.2] - 2023-05-09
 
 ### Added
