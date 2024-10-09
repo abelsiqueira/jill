@@ -1,25 +1,61 @@
 name: Linting
-
 on:
   push:
     branches:
       - main
+    tags: ["*"]
   pull_request:
     branches:
       - main
+
+concurrency:
+  # Skip intermediate builds: always.
+  # Cancel intermediate builds: only if it is a pull request build.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 
 jobs:
   lint:
     name: Linting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Clone repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - name: Hack for setup-python cache # https://github.com/actions/setup-python/issues/807
+        run: touch requirements.txt
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          cache: "pip"
+          python-version: "3.11"
 
-      - name: Install and run pre-commit
-        run: |
-          pip install pre-commit
-          pre-commit run -a
+      - name: Un-Hack for setup-python cache # https://github.com/actions/setup-python/issues/807
+        run: rm requirements.txt
+
+      - name: Cache pre-commit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('**/.pre-commit-config.yaml') }}
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Run pre-commit
+        run: SKIP=no-commit-to-branch pre-commit run -a
+
+  link-checker:
+    name: Link checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v1
+        with:
+          fail: true
+          args: --config '.lychee.toml' .

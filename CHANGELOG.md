@@ -99,7 +99,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 We didn't follow semantic versioning before, so this first tag has 4 years of work attached to it.
 
-<!-- markdown-link-check-disable -->
 [unreleased]: https://github.com/abelsiqueira/jill/compare/v0.5.3...HEAD
 [0.5.3]: https://github.com/abelsiqueira/jill/compare/v0.5.2...v0.5.3
 [0.5.2]: https://github.com/abelsiqueira/jill/compare/v0.5.1...v0.5.2

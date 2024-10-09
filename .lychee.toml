@@ -1,0 +1,8 @@
+exclude = [
+  "@ref",
+  "^https://github.com/.*/releases/tag/v.*$",
+  "^https://github.com/.*/compare/v.*HEAD$"
+]
+
+exclude_path = [
+]
