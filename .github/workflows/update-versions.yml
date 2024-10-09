@@ -23,7 +23,7 @@ jobs:
       - name: Install Julia, but only if it is not already available in the PATH
         uses: julia-actions/setup-julia@v1
         with:
-          version: '1'
+          version: "1"
           arch: ${{ runner.arch }}
         if: steps.julia_in_path.outcome != 'success'
 
@@ -38,7 +38,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: ":robot: Auto-update Julia versions"
-          title: '[AUTO] Update Julia versions'
+          title: "[AUTO] Update Julia versions"
           branch: auto-update-versions
           delete-branch: true
           labels: update, automated pr, no changelog
