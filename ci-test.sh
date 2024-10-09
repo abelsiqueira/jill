@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+LTS=1.10.5
+LTS_FAMILY=$(echo "$LTS" | cut -d. -f1-2)
+
 if [ -z "$VERSION" ]; then
   echo "Variable VERSION must be set"
   exit 1
@@ -36,12 +39,12 @@ $SUDO bash jill.sh -y
 
 msg "Installing Julia LTS version"
 $SUDO bash jill.sh -y --lts
-[[ $(julia-1.6.7 -v) == "julia version 1.6.7" ]]
+[[ $(julia-$LTS -v) == "julia version $LTS" ]]
 
 julia -e 'using Pkg; Pkg.update(); Pkg.add("Example")'
 
 msg "Upgrading to the latest Julia"
-$SUDO bash jill.sh -y -u 1.6
+$SUDO bash jill.sh -y -u "$LTS_FAMILY"
 julia -e 'using Pkg; Pkg.status()' | grep Example
 julia -e 'using Pkg; Pkg.update()' # Issue 73
 
