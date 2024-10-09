@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches: [main]
+    tags: ["*"]
   pull_request:
     branches: [main]
 
@@ -14,14 +15,18 @@ jobs:
 
     strategy:
       matrix:
-        jlversion: [0.5.2, 1.0.5, 1.3.0, 1.6.7, 1.8.1, 1.8.0-rc4]
+        jlversion:
+          [0.5.2, 1.0.5, 1.3.0, 1.6.7, 1.8.1, 1.8.0-rc4, 1.10.5, 1.11.0]
         os: [ubuntu-latest, macos-latest]
         sudo: ["", "sudo"]
 
     steps:
-      - uses: actions/checkout@v3
-      - name: add symlink dir to PATH
+      - name: Clone repo
+        uses: actions/checkout@v4
+
+      - name: Add symlink dir to PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
       - name: Test script
         env:
           VERSION: ${{ matrix.jlversion }}
