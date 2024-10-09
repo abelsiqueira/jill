@@ -46,54 +46,52 @@ SKIP_CONFIRM=0
 UPGRADE_CONFIRM=0
 JULIA_OLD=""
 
-while [[ $# -gt 0 ]]
-do
-key="$1"
+while [[ $# -gt 0 ]]; do
+  key="$1"
 
-case $key in
-    -h|--help)
-      usage
-      shift
-      exit 0
-      ;;
-    --lts)
-      JULIA_VERSION="$JULIA_LTS"
-      shift
-      ;;
-    --rc)
-      if ! command -v jq --version &> /dev/null
-      then
-        echo "Option --rc requires jq to be installed. Alternatively, use -v with x.y.z-rcN. Aborting"
-        exit 1
-      fi
-      JULIA_VERSION="$(curl -L https://julialang-s3.julialang.org/bin/versions.json | jq -r '[keys[] | select(contains("rc"))] | .[-1]')"
-      if [ -z "$JULIA_VERSION" ]; then
-        echo "Option --rc failed."
-        exit 1
-      fi
-      shift
-      ;;
-    -u|--upgrade)
-      UPGRADE_CONFIRM=1
-      JULIA_OLD="$2"
-      shift
-      shift
-      ;;
-    -v|--version)
-      JULIA_VERSION="$2"
-      shift
-      shift
-      ;;
-    -y|--yes|--no-confirm)
-      SKIP_CONFIRM=1
-      shift
-      ;;
-    *)    # unknown option
-      echo "Invalid option: $1" >&2
-      usage
-      exit 1;
-      ;;
-esac
+  case $key in
+  -h | --help)
+    usage
+    shift
+    exit 0
+    ;;
+  --lts)
+    JULIA_VERSION="$JULIA_LTS"
+    shift
+    ;;
+  --rc)
+    if ! command -v jq --version &>/dev/null; then
+      echo "Option --rc requires jq to be installed. Alternatively, use -v with x.y.z-rcN. Aborting"
+      exit 1
+    fi
+    JULIA_VERSION="$(curl -L https://julialang-s3.julialang.org/bin/versions.json | jq -r '[keys[] | select(contains("rc"))] | .[-1]')"
+    if [ -z "$JULIA_VERSION" ]; then
+      echo "Option --rc failed."
+      exit 1
+    fi
+    shift
+    ;;
+  -u | --upgrade)
+    UPGRADE_CONFIRM=1
+    JULIA_OLD="$2"
+    shift
+    shift
+    ;;
+  -v | --version)
+    JULIA_VERSION="$2"
+    shift
+    shift
+    ;;
+  -y | --yes | --no-confirm)
+    SKIP_CONFIRM=1
+    shift
+    ;;
+  *) # unknown option
+    echo "Invalid option: $1" >&2
+    usage
+    exit 1
+    ;;
+  esac
 done
 
 # For Linux, this script installs Julia into $JULIA_DOWNLOAD and make a
@@ -120,7 +118,7 @@ function badfolder() {
   echo "The folder ${JULIA_INSTALL@Q} is not on your PATH, you can"
   echo "- 1) Add it to your path; or"
   echo "- 2) Run 'JULIA_INSTALL=otherfolder ./jill.sh'"
-  if [[ "$SKIP_CONFIRM" == "0" ]]; then
+  if [[ $SKIP_CONFIRM == "0" ]]; then
     read -p "Do you want to add ${JULIA_INSTALL@Q} into your PATH? (Aborting otherwise) (Y/N) " -n 1 -r
     echo
     if [[ ! $REPLY =~ ^[Yy] ]]; then
@@ -136,7 +134,7 @@ function badfolder() {
 
 function hi() {
   header
-  if [[ ! ":$PATH:" == *":$JULIA_INSTALL:"* ]]; then
+  if [[ ":$PATH:" != *":$JULIA_INSTALL:"* ]]; then
     badfolder
   fi
   mkdir -p "$JULIA_INSTALL" # won't create if it's aborted earlier
@@ -214,7 +212,7 @@ function install_julia_linux() {
     mkdir -p "julia-$version"
     tar zxf "julia-$version.tar.gz" -C "julia-$version" --strip-components 1
   fi
-  if [[ "$LATEST" == "1" ]]; then
+  if [[ $LATEST == "1" ]]; then
     # Need to change suffix x.y-latest to x.y.z
     JLVERSION=$(./julia-"$version"/bin/julia -version | cut -d' ' -f3)
     if [ -d "julia-$JLVERSION" ]; then
@@ -231,7 +229,7 @@ function install_julia_linux() {
   rm -f "$JULIA_INSTALL"/julia{,-"$minor",-"$version"}
   julia="$PWD/julia-$version/bin/julia"
 
-  if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
+  if [[ $UPGRADE_CONFIRM == "1" ]]; then
     old_minor=$(echo "$JULIA_OLD" | cut -d. -f1,2 | cut -d- -f1)
     if [ "$USER" == "root" ] && [ -n "$SUDO_USER" ]; then
       JULIAENV="/home/$SUDO_USER"
@@ -271,9 +269,9 @@ function install_julia_mac() {
 
   hdiutil attach "julia-$version.dmg" -quiet -mount required -mountpoint "julia-$minor"
   if [ ! -d "julia-$minor" ]; then
-      # if it fails to mount for unknown reason, try it again after 1 second...
-      sleep 1
-      hdiutil attach "julia-$version.dmg" -quiet -mount required -mountpoint "julia-$minor"
+    # if it fails to mount for unknown reason, try it again after 1 second...
+    sleep 1
+    hdiutil attach "julia-$version.dmg" -quiet -mount required -mountpoint "julia-$minor"
   fi
 
   INSTALL_PATH="/Applications/julia-$minor.app"
@@ -281,7 +279,7 @@ function install_julia_mac() {
   rm -rf "$INSTALL_PATH"
   cp -a "julia-$minor/Julia-$minor.app" /Applications/
 
-  if [[ "$UPGRADE_CONFIRM" == "1" ]]; then
+  if [[ $UPGRADE_CONFIRM == "1" ]]; then
     old_minor=$(echo "$JULIA_OLD" | cut -d. -f1,2 | cut -d- -f1)
     if [ "$USER" == "root" ] && [ -n "$SUDO_USER" ]; then
       JULIAENV="/Users/$SUDO_USER"
@@ -297,7 +295,7 @@ function install_julia_mac() {
   ln -sf "$EXEC_PATH" "$JULIA_INSTALL/julia"
   ln -sf "$EXEC_PATH" "$JULIA_INSTALL/julia-$minor"
 
-  if [[ "$LATEST" == "1" ]]; then
+  if [[ $LATEST == "1" ]]; then
     version="$("$JULIA_INSTALL"/julia -version | cut -d' ' -f3)"
   fi
   ln -sf "$EXEC_PATH" "$JULIA_INSTALL/julia-$version"
@@ -310,17 +308,17 @@ function install_julia_mac() {
 
 # Main
 hi
-if [[ "$SKIP_CONFIRM" == "0" ]]; then
-    confirm
+if [[ $SKIP_CONFIRM == "0" ]]; then
+  confirm
 fi
 unameOut="$(uname -s)"
 case "${unameOut}" in
-    Linux*) install_julia_linux ;;
-    Darwin*) install_julia_mac ;;
-    # CYGWIN*)    machine=Cygwin;;
-    # MINGW*)     machine=MinGw;;
-    *)
-        echo "Unsupported platform $(unameOut)" >&2
-        exit 1
-        ;;
+Linux*) install_julia_linux ;;
+Darwin*) install_julia_mac ;;
+# CYGWIN*)    machine=Cygwin;;
+# MINGW*)     machine=MinGw;;
+*)
+  echo "Unsupported platform $(unameOut)" >&2
+  exit 1
+  ;;
 esac

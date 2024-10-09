@@ -13,13 +13,13 @@ jobs:
     name: Linting
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.x
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
 
-    - name: Install and run pre-commit
-      run: |
-        pip install pre-commit
-        pre-commit run -a
+      - name: Install and run pre-commit
+        run: |
+          pip install pre-commit
+          pre-commit run -a

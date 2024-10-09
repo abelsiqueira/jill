@@ -7,12 +7,7 @@
     }
   ],
   "description": "Jill is a Julia installer script in Bash.",
-  "keywords": [
-    "julia",
-    "julialang",
-    "installer",
-    "bash"
-  ],
+  "keywords": ["julia", "julialang", "installer", "bash"],
   "license": {
     "id": "GPL-3.0"
   },
