@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LTS=1.10.6
+LTS=1.10.7
 LTS_FAMILY=$(echo "$LTS" | cut -d. -f1-2)
 
 if [ -z "$VERSION" ]; then

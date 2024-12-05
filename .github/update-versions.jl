@@ -31,10 +31,7 @@ Download the file `https://julialang-s3.julialang.org/bin/versions.json` and par
 """
 function get_versions_online()
   versions_file = download("https://julialang-s3.julialang.org/bin/versions.json")
-  read(versions_file, String) |>
-      JSON3.read |>
-      keys .|>
-      string
+  read(versions_file, String) |> JSON3.read |> keys .|> string
 end
 
 """
@@ -100,8 +97,7 @@ function update_new_versions(new_versions, current_versions)
     ("README.md", r"Currently (.*)\)", "lts"),
     ("jill.sh", r"^JULIA_LTS=(.*)$", "lts"),
     ("jill.sh", r"^JULIA_LATEST=(.*)$", "latest-up-to-minor"),
-    ("ci-test.sh", r"julia-(.*) -v", "lts"),
-    ("ci-test.sh", r"julia version (.*)\"", "lts"),
+    ("ci-test.sh", r"^LTS=(.*)$", "lts"),
   ]
     regex_had_match = false
     filepath = joinpath(@__DIR__, "..", file)
