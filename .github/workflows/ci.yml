@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Clone repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Add symlink dir to PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
