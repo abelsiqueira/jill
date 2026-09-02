@@ -1,7 +1,9 @@
 exclude = [
   "@ref",
   "^https://github.com/.*/releases/tag/v.*$",
-  "^https://github.com/.*/compare/v.*HEAD$"
+  "^https://github.com/.*/compare/v.*HEAD$",
+  # Zenodo's badge endpoint is unreliable: intermittent timeouts and 502s
+  "^https://zenodo.org/badge/.*$"
 ]
 
 exclude_path = [
