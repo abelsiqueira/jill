@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 JULIA_LTS=1.10.12
-JULIA_LATEST=1.12
+JULIA_LATEST=1.13
 
 function usage() {
   echo "usage: jill.sh [options]
