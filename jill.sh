@@ -64,7 +64,7 @@ while [[ $# -gt 0 ]]; do
       echo "Option --rc requires jq to be installed. Alternatively, use -v with x.y.z-rcN. Aborting"
       exit 1
     fi
-    JULIA_VERSION="$(curl -L https://julialang-s3.julialang.org/bin/versions.json | jq -r '[keys[] | select(contains("rc"))] | .[-1]')"
+    JULIA_VERSION="$(curl -L https://julialang-s3.julialang.org/bin/versions.json | jq -r '[keys[] | select(contains("rc"))] | sort_by([(split("-")[0] | split(".") | map(tonumber)), (split("-rc")[1] | tonumber)]) | .[-1]')"
     if [ -z "$JULIA_VERSION" ]; then
       echo "Option --rc failed."
       exit 1
