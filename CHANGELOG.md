@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Fixed
+
+- `--rc` now installs the latest release candidate. It sorted versions as text and picked 1.9.0-rc3.
+
 ## [0.8.0] - 2026-09-15
 
 ### Changed
