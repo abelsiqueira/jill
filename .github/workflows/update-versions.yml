@@ -32,6 +32,7 @@ jobs:
         uses: julia-actions/cache@v3
 
       - name: Install JSON3 and run script
+        id: update
         run: |
           julia -e 'import Pkg; Pkg.add("JSON3")'
           julia .github/update-versions.jl
@@ -41,8 +42,8 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: ":robot: Auto-update Julia versions"
-          title: "[AUTO] Update Julia versions"
+          commit-message: ":robot: Bump Julia ${{ steps.update.outputs.summary }}"
+          title: "[AUTO] Bump Julia ${{ steps.update.outputs.summary }}"
           branch: auto-update-versions
           delete-branch: true
           labels: update, automated pr, no changelog

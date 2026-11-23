@@ -127,6 +127,18 @@ function main()
   new_versions["latest"] = get_latest_version(versions_list)
   new_versions["rc"] = get_rc_version(versions_list)
 
+  # Summary like "stable 1.13.2 → 1.13.3", used by the workflow for the commit and PR titles
+  changes = [
+    "$label $(current_versions[key]) → $(new_versions[key])" for
+    (key, label) in [("lts", "LTS"), ("latest", "stable"), ("rc", "RC")] if
+    current_versions[key] != new_versions[key]
+  ]
+  if haskey(ENV, "GITHUB_OUTPUT")
+    open(ENV["GITHUB_OUTPUT"], "a") do io
+      println(io, "summary=", join(changes, ", "))
+    end
+  end
+
   update_new_versions(new_versions, current_versions)
 end
 
